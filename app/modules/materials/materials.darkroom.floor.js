@@ -4,8 +4,9 @@ define(function(require, exports, module) {
   var $ = require("jquery");
   var _ = require("underscore");
   var Backbone = require("backbone");
-  var app = require("app");
+
 var THREE= require('three');
-var geometry = new THREE.CubeGeometry( 200, 200, 200 );
-module.exports = geometry;
+  var app = require("app");
+ var material = new THREE.MeshBasicMaterial( { color: 0xffff00, wireframe: false } );
+ module.exports = material;
 });

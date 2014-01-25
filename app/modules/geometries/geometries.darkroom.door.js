@@ -5,7 +5,14 @@ define(function(require, exports, module) {
   var _ = require("underscore");
   var Backbone = require("backbone");
   var app = require("app");
-var THREE= require('three');
-var geometry = new THREE.CubeGeometry( 200, 200, 200 );
-module.exports = geometry;
+
+
+
+var makeDoorGeometry = function(){
+	var THREE= require('three');
+var geometry = new THREE.CubeGeometry( 200, 350, 20 );
+return geometry
+}
+
+module.exports = makeDoorGeometry;
 });

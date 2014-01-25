@@ -6,6 +6,6 @@ define(function(require, exports, module) {
   var Backbone = require("backbone");
   var app = require("app");
 var THREE= require('three');
-var geometry = new THREE.CubeGeometry( 200, 200, 200 );
+var geometry = new THREE.CubeGeometry( 1000, 500, 1000 );
 module.exports = geometry;
 });

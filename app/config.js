@@ -14,7 +14,8 @@ require.config({
     // Map remaining vendor dependencies.
     "jquery": "../vendor/bower/jquery/jquery",
     "backbone": "../vendor/bower/backbone/backbone",
-    "three": "../vendor/three.min"
+    "three": "../vendor/three.min",
+    "threex": "../vendor/THREEx.KeyboardState"
   },
 
   shim: {
@@ -29,6 +30,10 @@ require.config({
     },
     "three":{
       exports:"THREE"
+    },
+    "threex":{
+      deps:["three"],
+      exports:"THREEx"
     }
   }
 });
