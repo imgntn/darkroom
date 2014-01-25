@@ -4,3 +4,11 @@
 @import "../../vendor/bower/html5-boilerplate/css/main.css";
 
 /*-- Application stylesheets. -----------------------------------------------*/
+
+.overlay_text{
+font-size: 48pt;
+position: absolute;
+color: white;
+top: 200px;
+left: 100px;
+}
