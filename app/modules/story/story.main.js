@@ -21,11 +21,32 @@ var Story={
 
 		// not sure what to do with this...
 
-		$(storyEl).text(story.storyLines[0].text);
+		/*$(storyEl).text(story.storyLines[0].text);
         $(storyEl).fadeOut(4000);
 
         $(storyEl).text(story.storyLines[1].text);
         $(storyEl).fadeIn(4000);
+*/
+        var delay = 2; //seconds
+
+ 		function loop ( delay ) {
+        	$.each(story.dreamQuotes, function(i,elm){
+        		$(storyEl).delay(delay*1E3).fadeOut();
+        		$(storyEl).queue(function(){
+        			$(storyEl).html(story.dreamQuotes[i]);
+        			$(storyEl).dequeue();
+        		});
+        		$(storyEl).fadeIn();
+        		$(storyEl).queue(function(){
+        			if(i == story.dreamQuotes.length-1) {
+        				loop(delay);
+        			}
+        			$(storyEl).dequeue();
+        		});
+        	});
+		}
+
+		loop(delay);
 	},
 	makeTheStory:function(){
 		this.storyLines[0] = {
