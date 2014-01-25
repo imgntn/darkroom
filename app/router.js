@@ -22,6 +22,8 @@ define(function(require, exports, module) {
         }
       });
       var currentScene = new CurrentScene();
+
+
       var animate = function() {
         var renderer = currentScene.get('renderer');
         var level = currentScene.get('level');
@@ -51,6 +53,7 @@ define(function(require, exports, module) {
 
         var keyboard=require('modules/controllers/controllers.first_person');
         currentScene.set('keyboard',keyboard);
+ window.story = require('modules/story/story.main');
 
       }
 
