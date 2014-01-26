@@ -6,9 +6,19 @@ define(function(require, exports, module) {
 	var Backbone = require("backbone");
 	var app = require("app");
 	var THREEx = require('threex');
-	console.log('3x:', THREEx);
 	var keyboard = new THREEx.KeyboardState();
+	$('body').keyup(function(e) {
+
+ if(e.which===32){
+keyboard.actionHandler();
+ }
+
+});
+
 	keyboard.collideableObjects = [];
+	keyboard.actionHandler=function(){
+		 	console.log('space up!')
+	};
 	keyboard.addToCollideableObjects = function(o) {
 		this.collideableObjects.push(o);
 	};
@@ -35,7 +45,7 @@ for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIn
 		_mesh.add(_camera);
 
 
-		var rotateAngle = Math.PI / 2;
+
 		var rotateAngle = 0.05;
 		// local transformations
 		this.collision(_mesh)
@@ -43,7 +53,7 @@ for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIn
 		if(this.collision(_mesh)!==true){
 					// move forwards/backwards/left/right
 		if (keyboard.pressed("W"))
-			_mesh.translateZ(-5);
+			_mesh.translateZ(-50);
 		if (keyboard.pressed("S"))
 			_mesh.translateZ(5);
 

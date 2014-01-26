@@ -15,7 +15,10 @@ require.config({
     "jquery": "../vendor/bower/jquery/jquery",
     "backbone": "../vendor/bower/backbone/backbone",
     "three": "../vendor/three.min",
-    "threex": "../vendor/THREEx.KeyboardState"
+    "threex": "../vendor/THREEx.KeyboardState",
+    "_typeface_js":"../vendor/typeface-0.15",
+    "bazar":"modules/fonts/bazar_medium.typeface",
+    "helvetiker":"modules/fonts/helvetiker_regular.typeface"
   },
 
   shim: {
@@ -34,6 +37,16 @@ require.config({
     "threex":{
       deps:["three"],
       exports:"THREEx"
+    },
+    "_typeface_js":{
+      exports:"_typeface_js"
+    },
+    "helvetiker":{
+      deps:['_typeface_js','three']
+    },
+    "bazar":{
+      deps:['_typeface_js']
     }
+
   }
 });

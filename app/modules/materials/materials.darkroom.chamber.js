@@ -7,6 +7,6 @@ define(function(require, exports, module) {
 
 var THREE= require('three');
   var app = require("app");
- var material = new THREE.MeshBasicMaterial( { color: 0x0000ff, wireframe: true } );
+ var material = new THREE.MeshBasicMaterial( { color: 0x222222, wireframe: true } );
  module.exports = material;
 });
