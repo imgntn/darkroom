@@ -59,7 +59,9 @@ define(function(require, exports, module) {
         window.story = require('modules/story/story.main');
 
         story.makeTheStory();
-        story.makeStoryElement();
+        
+        //story.makeStoryElement(darkroom.player.currentLocation);
+        story.makeStoryElement(5);
 
       }
 
