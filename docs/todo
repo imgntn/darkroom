@@ -3,14 +3,14 @@ x make the scene
 x make the camera
 x make the dark room
 x make the character controller
-		make the doors
+		x make the doors
+		collision detection
 			make the viewports for the doors
 			make the scenes for the viewports
 			connect the viewport to the scene
 		action handler
 			-embed actions in items, check for usable items in proximity to
 
-collision detection
 
 magic square mechanism
 -2D array of numbers
