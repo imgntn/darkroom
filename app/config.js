@@ -17,7 +17,6 @@ require.config({
     "three": "../vendor/three.min",
     "threex": "../vendor/THREEx.KeyboardState",
     "_typeface_js":"../vendor/typeface-0.15",
-    "bazar":"modules/fonts/bazar_medium.typeface",
     "helvetiker":"modules/fonts/helvetiker_regular.typeface"
   },
 

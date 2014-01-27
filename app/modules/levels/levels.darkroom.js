@@ -16,7 +16,7 @@ define(function(require, exports, module) {
 	var player = require('../meshes/meshes.player')
 	player.position.y = 240;
 	// player.position.x=-2500;
-	player.position.z = 750;
+	player.position.z = 965;
 	player.visible = false;
 
 
@@ -51,6 +51,9 @@ define(function(require, exports, module) {
 
 	keyboard.addToCollideableObjects(chamber)
 	keyboard.addToCollideableObjects(door1)
+	keyboard.addToCollideableObjects(door2)
+	keyboard.addToCollideableObjects(door3)
+	keyboard.addToCollideableObjects(door4)
 
 	door1.position.z = 500;
 	door1.position.y = 175;
@@ -89,7 +92,6 @@ define(function(require, exports, module) {
 	var smalltable1=textHandler.makeText(burningbox.staticObjects[3][0]);
 	var smalltable2=textHandler.makeText(burningbox.staticObjects[3][1]);
 
-console.log('tables',burningbox.staticObjects[3][0])
 	var dresser1 = textHandler.makeText(burningbox.staticObjects[4][0]);
 	var dresser2 = textHandler.makeText(burningbox.staticObjects[4][1]);
 
@@ -312,7 +314,9 @@ console.log('tables',burningbox.staticObjects[3][0])
 	fire7.rotateOnAxis(new THREE.Vector3( 0, 1, 0 ), Math.PI);
 	// fire7.rotateOnAxis(new THREE.Vector3( 0, 0, 1 ), -Math.PI);
 	fire7.scale=new THREE.Vector3(4,14,8);
-
+_.each(fires,function(thisFire){
+	keyboard.addToDetectableObjects(thisFire);
+})
 	// fire8.position.set();
 	// fire9.position.set();
 	// fire10.position.set();
@@ -322,7 +326,7 @@ console.log('tables',burningbox.staticObjects[3][0])
 	jewelrybox1.position.set(4850,225,-850);
     jewelrybox1.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI/2);
 	jewelrybox1.scale=new THREE.Vector3(1,1,2);
-
+	keyboard.addToDetectableObjects(jewelrybox1);
 
 	clothes1.position.set(5700,700,-1200);
 	clothes1.scale=new THREE.Vector3(3,2,2);
@@ -671,6 +675,7 @@ var mailbox9 = textHandler.easyText('Mailbox');
 	mailbox9.scale=new THREE.Vector3(1,1,1);
 
 train_objects.push(mailbox9);
+keyboard.addToDetectableObjects(mailbox9);
 
 var mailbox10 = textHandler.easyText('Mailbox');
 	mailbox10.position.set(-9100,225,-2500);
@@ -695,6 +700,7 @@ var mailbox12 = textHandler.easyText('Mailbox');
 	mailbox12.scale=new THREE.Vector3(1,1,1);
 
 train_objects.push(mailbox12);
+
 
 var train_tree1 = textHandler.easyText('Tree');
 	train_tree1.position.set(-12100,0,3500);

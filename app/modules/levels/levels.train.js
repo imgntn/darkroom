@@ -18,9 +18,9 @@ define(function(require, exports, module) {
 			this.screenScene = new THREE.Scene();
 
 			this.screenCamera = new THREE.OrthographicCamera(
-				window.innerWidth / -2, window.innerWidth / 2,
-				window.innerHeight / 2, window.innerHeight / -2, -10000, 10000);
-			this.screenCamera.position.z = 1000;
+			-12000,-8000,
+				1000, 0, 1,5000);
+			this.screenCamera.position.z = 5000;
 			this.screenScene.add(this.screenCamera);
 
 			this.screenGeometry = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight);

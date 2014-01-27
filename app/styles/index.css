@@ -1,4 +1,55 @@
-@font-face {
-	font-family: 'Bazar';
-	src: url(Bazar.ttf);
+.overlay_text{
+font-size: 48pt;
+position: absolute;
+color: white;
+top: 200px;
+left: 100px;
+}
+
+body{
+	background-color: black;
+	overflow:hidden;
+}
+
+canvas{
+margin-top: -8px;
+margin-left: -8px;
+}
+
+#goalText{
+font-size: 28pt;
+position: absolute;
+color: white;
+text-align:center;
+width:100%;
+height:100%;
+}
+
+#itemText{
+font-size: 28pt;
+position: absolute;
+color: white;
+text-align:center;
+width:100%;
+height:100%;
+}
+
+#statusHolder{
+	display:none;
+}
+
+#darkroomTitle{
+margin-top:200px;
+}
+
+
+#loader{
+
+	color:white;
+	background:transparent;
+	height:100%;
+	width:100%;
+	text-align:center;
+	font-size:48pt;
+
 }
