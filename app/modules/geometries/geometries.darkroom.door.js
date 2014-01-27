@@ -10,7 +10,7 @@ define(function(require, exports, module) {
 
 var makeDoorGeometry = function(){
 	var THREE= require('three');
-var geometry = new THREE.CubeGeometry( 200, 350, 20 );
+var geometry = new THREE.CubeGeometry( 200, 350, 2 );
 return geometry
 }
 
