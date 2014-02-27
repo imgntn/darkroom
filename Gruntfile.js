@@ -239,7 +239,7 @@ module.exports = function(grunt) {
 
   // Create an aliased test task.
   grunt.registerTask("test", ["karma:run"]);
-grunt.registerTask('heroku:development', 'server');
+//grunt.registerTask('heroku:development', 'server');
   // When running the default Grunt command, just lint the code.
   grunt.registerTask("default", [
     "clean",
