@@ -75,7 +75,7 @@ module.exports = function(grunt) {
     server: {
       options: {
         host: "0.0.0.0",
-        port: 8000
+        port: process.env.port||3000
       },
 
       development: {},
