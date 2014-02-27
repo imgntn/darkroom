@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
   "use strict";
-
+var thisPort = process.env.PORT || 3333
   grunt.initConfig({
     // Wipe out previous builds and test reporting.
     clean: ["dist/", "test/reports"],
@@ -73,9 +73,9 @@ module.exports = function(grunt) {
     },
 
     server: {
- port:grunt.option('port')||3000
       options: {
         host: "0.0.0.0",
+	port:thisPort
       },
 
       development: {},
