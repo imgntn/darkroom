@@ -230,7 +230,7 @@ for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIn
 		if(this.collision(_mesh)!==true){
 					// move forwards/backwards/left/right
 		if (keyboard.pressed("W"))
-			_mesh.translateZ(-50);
+			_mesh.translateZ(-5);
 		if (keyboard.pressed("S"))
 			_mesh.translateZ(5);
 
