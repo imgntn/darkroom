@@ -27,5 +27,8 @@
     "test": "grunt test coveralls"
   },
   "name": "dark-room",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "dependencies": {
+    "grunt": "~0.4.2"
+  }
 }
