@@ -50,15 +50,15 @@ define(function(require, exports, module) {
         var cameraTrain = currentScene.get('cameraTrain');
 
         requestAnimationFrame(animate);
-        renderer.render(level, cameraBurningBox, burningbox.firstRenderTarget, true);
-        // renderer.render(level, burningbox.screenCamera, burningbox.finalRenderTarget, true);
-        renderer.render(level, cameraDinnerParty, dinnerParty.firstRenderTarget, true);
-        // renderer.render(level, dinnerParty.screenCamera, dinnerParty.finalRenderTarget, true);
-        renderer.render(level, cameraLizards, processionOfLizards.firstRenderTarget, true);
-        // renderer.render(level, processionOfLizards.screenCamera, processionOfLizards.finalRenderTarget, true);
-        renderer.render(level, cameraTrain, train.firstRenderTarget, true);
+        // renderer.render(level, cameraBurningBox, burningbox.firstRenderTarget, true);
+        renderer.render(level, burningbox.screenCamera, burningbox.finalRenderTarget, true);
+        // renderer.render(level, cameraDinnerParty, dinnerParty.firstRenderTarget, true);
+        renderer.render(level, dinnerParty.screenCamera, dinnerParty.finalRenderTarget, true);
+        // renderer.render(level, cameraLizards, processionOfLizards.firstRenderTarget, true);
+        renderer.render(level, processionOfLizards.screenCamera, processionOfLizards.finalRenderTarget, true);
+        // renderer.render(level, cameraTrain, train.firstRenderTarget, true);
         // renderer.render(level, train.screenCamera, train.finalRenderTarget, true);
-        renderer.render(level, camera);
+         renderer.render(level, camera);
         keyboard.update(level.player, camera);
 
 
@@ -195,6 +195,7 @@ define(function(require, exports, module) {
 
       init();
       animate();
+      var keyboard = require('modules/controllers/controllers.first_person');
         keyboard.enterLevel(27)
 
     }

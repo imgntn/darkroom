@@ -14,10 +14,11 @@ require.config({
     // Map remaining vendor dependencies.
     "jquery": "../vendor/bower/jquery/jquery",
     "backbone": "../vendor/bower/backbone/backbone",
+
+    "_typeface_js": "../vendor/typeface-0.15",
+    "helvetiker": "modules/fonts/helvetiker_regular.typeface",
     "three": "../vendor/three",
-    "threex": "../vendor/THREEx.KeyboardState",
-    "_typeface_js":"../vendor/typeface-0.15",
-    "helvetiker":"modules/fonts/helvetiker_regular.typeface"
+    "threex": "../vendor/THREEx.KeyboardState"
   },
 
   shim: {
@@ -30,21 +31,21 @@ require.config({
       // This maps the global `Backbone` object to `require("backbone")`.
       exports: "Backbone"
     },
-    "three":{
-      exports:"THREE"
+    "three": {
+      exports: "THREE"
     },
-    "threex":{
-      deps:["three"],
-      exports:"THREEx"
+    "threex": {
+      deps: ["three"],
+      exports: "THREEx"
     },
-    "_typeface_js":{
-      exports:"_typeface_js"
+    "_typeface_js": {
+      exports: "_typeface_js"
     },
-    "helvetiker":{
-      deps:['_typeface_js','three']
+    "helvetiker": {
+      deps: ['_typeface_js', 'three']
     },
-    "bazar":{
-      deps:['_typeface_js']
+    "bazar": {
+      deps: ['_typeface_js']
     }
 
   }
