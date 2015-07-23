@@ -14,7 +14,7 @@ require.config({
     // Map remaining vendor dependencies.
     "jquery": "../vendor/bower/jquery/jquery",
     "backbone": "../vendor/bower/backbone/backbone",
-    "three": "../vendor/three.min",
+    "three": "../vendor/three",
     "threex": "../vendor/THREEx.KeyboardState",
     "_typeface_js":"../vendor/typeface-0.15",
     "helvetiker":"modules/fonts/helvetiker_regular.typeface"

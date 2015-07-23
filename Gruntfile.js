@@ -242,7 +242,7 @@ var thisPort = process.env.PORT || 3333
   // When running the default Grunt command, just lint the code.
   grunt.registerTask("default", [
     "clean",
-    "jshint",
+    // "jshint",
     "processhtml",
     "copy",
     "requirejs",
