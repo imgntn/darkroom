@@ -13,10 +13,24 @@ define(function(require, exports, module) {
  
 
 
-	$('body').keyup(function(e) {
+        $('body').keyup(function(e) {
 
  if(e.which===32){
-	var canInteract=keyboard.detectObjects()
+        var canInteract=keyboard.detectObjects()
+ }
+ else if(e.which===77){
+        var bg = document.getElementById('bgMusic');
+        var vocals = document.getElementById('vocals');
+        if(bg && vocals){
+                if(bg.paused){
+                        bg.play();
+                        vocals.play();
+                }
+                else{
+                        bg.pause();
+                        vocals.pause();
+                }
+        }
  }
 
 });
