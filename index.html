@@ -18,7 +18,8 @@
 
 <body>
   <audio id="bgMusic" src="/app/sound/darkRoomSONG.mp3" autoplay loop></audio>
-    <audio id="vocals" src="/app/sound/vocal0.mp3" autoplay loop></audio>
+  <audio id="vocals" src="/app/sound/vocal0.mp3" autoplay loop></audio>
+  <button id="audioToggle">Mute</button>
   <!-- Application container. -->
     <main role="main" id="main"></main>
   <div id="loader">
@@ -37,8 +38,7 @@
 
 
   <!-- Application source. -->
-  <!-- build:[src] /source.min.js -->
-  <script data-main="/app/main" src="/vendor/bower/requirejs/require.js"></script>
+  <script src="/dist/bundle.js"></script>
  
 
   

@@ -18,9 +18,10 @@ WASD controls, press the space bar to do the action that the level says you shou
 
 ## Local Development
 
-1. Install dependencies:
+1. Install dependencies and build the bundle:
    ```bash
    npm install
+   npm run build
    ```
 
 2. Start the server:
@@ -30,4 +31,5 @@ WASD controls, press the space bar to do the action that the level says you shou
 
 Then open [http://localhost:3333](http://localhost:3333) in your browser.
 
-Press **M** to mute or unmute the background music while playing.
+Use the **Mute** button (or press **M**) to toggle audio. The preference
+persists across sessions.
