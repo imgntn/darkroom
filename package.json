@@ -27,6 +27,7 @@
   },
   "scripts": {
     "test": "grunt test coveralls"
+    ,"start": "node server.js"
   },
   "name": "dark-room",
   "version": "0.1.0",
