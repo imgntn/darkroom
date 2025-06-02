@@ -41,3 +41,9 @@ Run the automated tests with Web Test Runner:
 ```bash
 npm test
 ```
+
+### Offline Play
+
+The game includes a service worker that caches key assets for offline use. After
+loading the site once while online, you can revisit without a network
+connection and it will continue to work.

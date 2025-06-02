@@ -104,3 +104,21 @@ margin-top:200px;
     opacity: 0;
   }
 }
+
+#progressOverlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 10px;
+  z-index: 1000;
+  display: none;
+}
+#progressOverlay ul {
+  list-style: none;
+  padding-left: 0;
+}
+#progressOverlay button {
+  margin-top: 5px;
+}
