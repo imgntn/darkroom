@@ -27,6 +27,11 @@ export function getProgress() {
   return progress;
 }
 
+export function resetProgress() {
+  progress = { levels: {}, items: {}, puzzleSolved: false };
+  save();
+}
+
 function save() {
   localStorage.setItem('progress', JSON.stringify(progress));
 }

@@ -110,8 +110,9 @@ keyboard.rotations.train={	x: 0, y: -0.10000000000000063, z: 0}
 	keyboard.player.rotation.z=rotation.z;	
 	}
 	}
-        keyboard.enterLevel=function(id){
+        keyboard.enterLevel=async function(id){
                 markLevelVisited(id);
+                await app.router.loadLevelById(id);
                 if(id==="darkroom"){
 $('#goalText').text('');
 keyboard.relocatePlayer(keyboard.locations.darkroom)

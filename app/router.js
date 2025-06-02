@@ -2,14 +2,7 @@ import Backbone from 'backbone';
 import * as THREE from 'three';
 import cameraMain from 'modules/cameras/cameras.main';
 import darkroom from 'modules/levels/levels.darkroom';
-import cameraBurningBox from 'modules/cameras/cameras.burningbox';
-import burningbox from 'modules/levels/levels.burningbox';
-import cameraDinnerParty from 'modules/cameras/cameras.dinner_party';
-import dinnerParty from 'modules/levels/levels.dinner_party';
-import cameraLizards from 'modules/cameras/cameras.procession_of_lizards';
-import processionOfLizards from 'modules/levels/levels.procession_of_lizards';
-import cameraTrain from 'modules/cameras/cameras.train';
-import train from 'modules/levels/levels.train';
+import { loadLevel, getLoadedLevel } from './levelLoader.js';
 import rendererMain from 'modules/renderers/renderers.main';
 import keyboard from 'modules/controllers/controllers.first_person';
 import story from 'modules/story/story.main';
@@ -45,8 +38,10 @@ export default Backbone.Router.extend({
 
         var burningbox = currentScene.get('burningbox');
         var cameraBurningBox = currentScene.get('cameraBurningBox');
-        burningbox.screenCamera.updateProjectionMatrix();
-         cameraBurningBox.updateProjectionMatrix();
+        if (burningbox && cameraBurningBox) {
+          burningbox.screenCamera.updateProjectionMatrix();
+          cameraBurningBox.updateProjectionMatrix();
+        }
 
         var dinnerParty = currentScene.get('dinnerParty');
         var cameraDinnerParty = currentScene.get('cameraDinnerParty');
@@ -58,19 +53,60 @@ export default Backbone.Router.extend({
         var cameraTrain = currentScene.get('cameraTrain');
 
         requestAnimationFrame(animate);
-        // renderer.render(level, cameraBurningBox, burningbox.firstRenderTarget, true);
-        renderer.render(level, burningbox.screenCamera, burningbox.finalRenderTarget, true);
-        // renderer.render(level, cameraDinnerParty, dinnerParty.firstRenderTarget, true);
-        renderer.render(level, dinnerParty.screenCamera, dinnerParty.finalRenderTarget, true);
-        // renderer.render(level, cameraLizards, processionOfLizards.firstRenderTarget, true);
-        renderer.render(level, processionOfLizards.screenCamera, processionOfLizards.finalRenderTarget, true);
-        // renderer.render(level, cameraTrain, train.firstRenderTarget, true);
-        // renderer.render(level, train.screenCamera, train.finalRenderTarget, true);
+        if (burningbox && cameraBurningBox) {
+          renderer.render(level, burningbox.screenCamera, burningbox.finalRenderTarget, true);
+        }
+        if (dinnerParty && cameraDinnerParty) {
+          renderer.render(level, dinnerParty.screenCamera, dinnerParty.finalRenderTarget, true);
+        }
+        if (processionOfLizards && cameraLizards) {
+          renderer.render(level, processionOfLizards.screenCamera, processionOfLizards.finalRenderTarget, true);
+        }
+        if (train && cameraTrain) {
+          // renderer.render(level, train.screenCamera, train.finalRenderTarget, true);
+        }
          renderer.render(level, camera);
         keyboard.update(level.player, camera);
 
 
       }
+
+      this.loadLevelById = async function(id) {
+        const map = {
+          27: 'burningbox',
+          28: 'dinner_party',
+          29: 'train',
+          30: 'procession_of_lizards'
+        };
+        const name = map[id];
+        if (!name) return;
+        const loaded = getLoadedLevel(name) || await loadLevel(name);
+        currentScene.set(name, loaded.level);
+        const camKey = 'camera' + name.replace(/(^|_)(\w)/g, (m, p1, p2) => p2.toUpperCase());
+        currentScene.set(camKey, loaded.camera);
+        darkroom.add(loaded.camera);
+        darkroom.add(loaded.level.plane1);
+        if (name === 'burningbox') {
+          loaded.camera.position.set(2684,240,248);
+          loaded.level.plane1.position.y = 350;
+          loaded.level.plane1.position.z = 502;
+          darkroom.objectsToAnimate.push(loaded.camera, loaded.level.screenCamera);
+        } else if (name === 'dinner_party') {
+          loaded.level.plane1.position.x = 502;
+          loaded.level.plane1.position.y = 250;
+          loaded.level.plane1.position.z = 0;
+          loaded.level.plane1.rotateOnAxis(new THREE.Vector3(0,1,0), -Math.PI/2);
+        } else if (name === 'procession_of_lizards') {
+          loaded.level.plane1.position.x = -502;
+          loaded.level.plane1.position.y = 250;
+          loaded.level.plane1.position.z = 0;
+          loaded.level.plane1.rotateOnAxis(new THREE.Vector3(0,1,0), Math.PI/2);
+        } else if (name === 'train') {
+          loaded.level.plane1.position.y = 250;
+          loaded.level.plane1.position.z = -502;
+          loaded.level.plane1.rotateOnAxis(new THREE.Vector3(0,1,0), Math.PI);
+        }
+      };
 
       var init = function() {
 
@@ -79,52 +115,10 @@ export default Backbone.Router.extend({
         currentScene.set('cameraMain', cameraMain);
         currentScene.set('level', darkroom);
         keyboard.initPointerLock(cameraMain);
-        cameraBurningBox.position.set(2684,240,248);
-        currentScene.set('cameraBurningBox', cameraBurningBox)
-        currentScene.set('burningbox', burningbox)
-                darkroom.objectsToAnimate.push(cameraBurningBox,burningbox.screenCamera)
-        console.log('cameraBurningBox',cameraBurningBox)
  
   
 
 
-        currentScene.set('cameraDinnerParty', cameraDinnerParty)
-        currentScene.set('dinnerParty', dinnerParty)
-
-        currentScene.set('cameraLizards', cameraLizards)
-        currentScene.set('processionOfLizards', processionOfLizards)
-
-        currentScene.set('cameraTrain', cameraTrain)
-        currentScene.set('train', train)
-
-        darkroom.add(cameraBurningBox);
-        darkroom.add(burningbox.plane1);
-
-        darkroom.add(cameraDinnerParty);
-        darkroom.add(dinnerParty.plane1);
-
-        darkroom.add(cameraLizards);
-        darkroom.add(processionOfLizards.plane1);
-
-        darkroom.add(cameraTrain);
-        darkroom.add(train.plane1);
-
-        burningbox.plane1.position.y = 350;
-        burningbox.plane1.position.z = 502;
-
-        dinnerParty.plane1.position.x = 502;
-        dinnerParty.plane1.position.y = 250;
-        dinnerParty.plane1.position.z = 0;
-        dinnerParty.plane1.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
-
-        processionOfLizards.plane1.position.x = -502;
-        processionOfLizards.plane1.position.y = 250;
-        processionOfLizards.plane1.position.z = 0;
-        processionOfLizards.plane1.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI / 2);
-
-        train.plane1.position.y = 250;
-        train.plane1.position.z = -502;
-        train.plane1.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
 
 
 
