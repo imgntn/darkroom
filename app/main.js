@@ -1,17 +1,17 @@
-define(function(require){
-  'use strict';
-  var app = require('app');
-  var Router = require('router');
-  var audio = require('audioToggle');
+import Backbone from 'backbone';
+import app from './app.js';
+import Router from './router.js';
+import audio from './audioToggle.js';
 
-  app.router = new Router();
+app.router = new Router();
 
-  Backbone.history.start({
-    pushState: false,
-    root: app.root
-  });
-
-  if(audio && audio.initAudioToggle){
-    audio.initAudioToggle();
-  }
+Backbone.history.start({
+  pushState: false,
+  root: app.root
 });
+
+if (audio && audio.initAudioToggle) {
+  audio.initAudioToggle();
+}
+
+export default app;

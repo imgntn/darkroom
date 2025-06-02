@@ -1,12 +1,20 @@
-define(function(require, exports, module) {
-  "use strict";
+import Backbone from 'backbone';
+import * as THREE from 'three';
+import cameraMain from 'modules/cameras/cameras.main';
+import darkroom from 'modules/levels/levels.darkroom';
+import cameraBurningBox from 'modules/cameras/cameras.burningbox';
+import burningbox from 'modules/levels/levels.burningbox';
+import cameraDinnerParty from 'modules/cameras/cameras.dinner_party';
+import dinnerParty from 'modules/levels/levels.dinner_party';
+import cameraLizards from 'modules/cameras/cameras.procession_of_lizards';
+import processionOfLizards from 'modules/levels/levels.procession_of_lizards';
+import cameraTrain from 'modules/cameras/cameras.train';
+import train from 'modules/levels/levels.train';
+import rendererMain from 'modules/renderers/renderers.main';
+import keyboard from 'modules/controllers/controllers.first_person';
+import story from 'modules/story/story.main';
 
-
-  // External dependencies.
-  var Backbone = require("backbone");
-  var THREE = require('three')
-  // Defining the application router.
-  module.exports = Backbone.Router.extend({
+export default Backbone.Router.extend({
     routes: {
       "": "index"
     },
@@ -68,15 +76,10 @@ define(function(require, exports, module) {
 
         //camera, scene
 
-        var cameraMain = require('modules/cameras/cameras.main');
         currentScene.set('cameraMain', cameraMain);
-        var darkroom = require('modules/levels/levels.darkroom');
         currentScene.set('level', darkroom);
-        var cameraBurningBox = require('modules/cameras/cameras.burningbox');
         cameraBurningBox.position.set(2684,240,248);
         currentScene.set('cameraBurningBox', cameraBurningBox)
-        var burningbox = require('modules/levels/levels.burningbox');
-
         currentScene.set('burningbox', burningbox)
                 darkroom.objectsToAnimate.push(cameraBurningBox,burningbox.screenCamera)
         console.log('cameraBurningBox',cameraBurningBox)
@@ -84,19 +87,13 @@ define(function(require, exports, module) {
   
 
 
-        var cameraDinnerParty = require('modules/cameras/cameras.dinner_party');
         currentScene.set('cameraDinnerParty', cameraDinnerParty)
-        var dinnerParty = require('modules/levels/levels.dinner_party');
         currentScene.set('dinnerParty', dinnerParty)
 
-        var cameraLizards = require('modules/cameras/cameras.procession_of_lizards');
         currentScene.set('cameraLizards', cameraLizards)
-        var processionOfLizards = require('modules/levels/levels.procession_of_lizards');
         currentScene.set('processionOfLizards', processionOfLizards)
 
-        var cameraTrain = require('modules/cameras/cameras.train');
         currentScene.set('cameraTrain', cameraTrain)
-        var train = require('modules/levels/levels.train');
         currentScene.set('train', train)
 
         darkroom.add(cameraBurningBox);
@@ -130,7 +127,7 @@ define(function(require, exports, module) {
 
 
 
-        var renderer = require('modules/renderers/renderers.main');
+        var renderer = rendererMain;
         renderer.autoClear = false;
         renderer.setSize(window.innerWidth , window.innerHeight)
         currentScene.set('renderer', renderer);
@@ -139,7 +136,6 @@ define(function(require, exports, module) {
        $('#statusHolder').show()
 
 
-        var keyboard = require('modules/controllers/controllers.first_person');
         keyboard.player = darkroom.player;
 
         var detectGeometry = new THREE.CubeGeometry(800, 800, 800, 100, 100, 100);
@@ -153,8 +149,6 @@ define(function(require, exports, module) {
         keyboard.detectMesh = detectMesh;
 
         currentScene.set('keyboard', keyboard);
-
-        var story = require('modules/story/story.main');
 
         story.makeTheStory();
 
@@ -195,9 +189,7 @@ define(function(require, exports, module) {
 
       init();
       animate();
-      var keyboard = require('modules/controllers/controllers.first_person');
-        keyboard.enterLevel(27)
+      keyboard.enterLevel(27)
 
     }
   });
-});

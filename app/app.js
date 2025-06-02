@@ -1,15 +1,8 @@
-define(function(require, exports, module) {
-  "use strict";
+import 'helvetiker';
 
-  // External dependencies.
-  var _ = require("underscore");
-  var $ = require("jquery");
-  var Backbone = require("backbone");
-  var helvetiker=require('helvetiker')
-  // Alias the module for easier identification.
-  var app = module.exports;
+const app = {};
 
+// The root path to run the application through.
+app.root = "/";
 
-  // The root path to run the application through.
-  app.root = "/";
-});
+export default app;

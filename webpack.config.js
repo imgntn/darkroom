@@ -11,11 +11,12 @@ module.exports = {
       jquery: 'jquery',
       underscore: 'underscore',
       backbone: 'backbone',
-      three: path.resolve(__dirname, 'vendor/three'),
+      three: 'three',
       threex: path.resolve(__dirname, 'vendor/THREEx.KeyboardState'),
       _typeface_js: path.resolve(__dirname, 'vendor/typeface-0.15'),
       helvetiker: path.resolve(__dirname, 'vendor/helvetiker_regular.typeface.js'),
-      audioToggle: path.resolve(__dirname, 'app/audioToggle')
+      audioToggle: path.resolve(__dirname, 'app/audioToggle'),
+      modules: path.resolve(__dirname, 'app/modules')
     }
   },
   mode: 'production'
