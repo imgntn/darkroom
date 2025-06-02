@@ -78,6 +78,7 @@ export default Backbone.Router.extend({
 
         currentScene.set('cameraMain', cameraMain);
         currentScene.set('level', darkroom);
+        keyboard.initPointerLock(cameraMain);
         cameraBurningBox.position.set(2684,240,248);
         currentScene.set('cameraBurningBox', cameraBurningBox)
         currentScene.set('burningbox', burningbox)
