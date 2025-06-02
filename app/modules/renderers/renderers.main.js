@@ -1,15 +1,6 @@
-define(function(require, exports, module) {
-  "use strict";
+import * as THREE from 'three';
 
-  var $ = require("jquery");
-  var _ = require("underscore");
-  var Backbone = require("backbone");
- var THREE= require('three');
-  var app = require("app");
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-var renderer=new THREE.WebGLRenderer();
- renderer.setSize( window.innerWidth, window.innerHeight );
-
-
-  module.exports=renderer;
-});
+export default renderer;

@@ -3,34 +3,32 @@ import _ from 'underscore';
 import Backbone from 'backbone';
 import app from 'app';
 import THREEx from 'threex';
+import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import story from 'modules/story/story.main';
 import createMagicSquare from 'modules/puzzles/magic_square';
+import { markPuzzleSolved, markItemCollected, markLevelVisited } from '../../progress.js';
 
 const keyboard = new THREEx.KeyboardState();
+let controls;
+
+keyboard.initPointerLock = function(camera) {
+  controls = new PointerLockControls(camera, document.body);
+  document.addEventListener('click', () => controls.lock());
+  controls.addEventListener('lock', () => {
+    const hint = document.getElementById('pointerHint');
+    if (hint) hint.style.display = 'none';
+  });
+  controls.addEventListener('unlock', () => {
+    const hint = document.getElementById('pointerHint');
+    if (hint) hint.style.display = 'block';
+  });
+};
 
 document.addEventListener('keydown', (e) => {
-  if (e.code === 'KeyP') {
-    document.body.requestPointerLock();
-  }
   if (e.code === 'KeyO') {
     createMagicSquare(() => {
-      console.log('Magic square solved');
+      markPuzzleSolved();
     });
-  }
-});
-
-document.addEventListener('pointerlockchange', () => {
-  const hint = document.getElementById('pointerHint');
-  if (hint) {
-    hint.style.display =
-      document.pointerLockElement === document.body ? 'none' : 'block';
-  }
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (document.pointerLockElement === document.body && keyboard.player) {
-    keyboard.player.rotation.y -= e.movementX * 0.002;
-    keyboard.player.rotation.x -= e.movementY * 0.002;
   }
 });
 
@@ -112,8 +110,9 @@ keyboard.rotations.train={	x: 0, y: -0.10000000000000063, z: 0}
 	keyboard.player.rotation.z=rotation.z;	
 	}
 	}
-	keyboard.enterLevel=function(id){
-		if(id==="darkroom"){
+        keyboard.enterLevel=function(id){
+                markLevelVisited(id);
+                if(id==="darkroom"){
 $('#goalText').text('');
 keyboard.relocatePlayer(keyboard.locations.darkroom)
 $('.story').remove()
@@ -235,18 +234,18 @@ for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIn
 		var collisionResults = ray.intersectObjects( this.detectableObjects );
 		if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
 			{	
-					_.each(collisionResults,function(result){
-						console.log('result obj id:',result.object.id)
-						if(result.object.id===75){
-
-							keyboard.enterLevel('darkroom')
-						   $('#itemText').text('You rescued the jewelry box.').fadeIn('slow').delay(3500).fadeOut('slow')					
-						   	}
-						   if(result.object.id===123){
-
-							keyboard.enterLevel('darkroom')
-						   $('#itemText').text('You found the letter.').fadeIn('slow').delay(3500).fadeOut('slow')					
-						   	}
+                                        _.each(collisionResults,function(result){
+                                                console.log('result obj id:',result.object.id)
+                                                if(result.object.id===75){
+                                                        keyboard.enterLevel('darkroom')
+                                                   $('#itemText').text('You rescued the jewelry box.').fadeIn('slow').delay(3500).fadeOut('slow')
+                                                   markItemCollected('jewelryBox');
+                                                        }
+                                                   if(result.object.id===123){
+                                                        keyboard.enterLevel('darkroom')
+                                                   $('#itemText').text('You found the letter.').fadeIn('slow').delay(3500).fadeOut('slow')
+                                                   markItemCollected('letter');
+                                                        }
 					
 					})
 					console.log('detection results:',collisionResults)
@@ -255,39 +254,17 @@ for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIn
 
 	}	
 	},
-	keyboard.update = function(_mesh, _camera) {
-
-		_mesh.add(_camera);
-
-
-
-		var rotateAngle = 0.05;
-		// local transformations
-		this.collision(_mesh)
-	
-		if(this.collision(_mesh)!==true){
-					// move forwards/backwards/left/right
-		if (keyboard.pressed("W"))
-			_mesh.translateZ(-5);
-		if (keyboard.pressed("S"))
-			_mesh.translateZ(5);
-
-
-		// rotate left/right/up/down
-		var rotation_matrix = new THREE.Matrix4().identity();
-		if (keyboard.pressed("A"))
-			_mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), rotateAngle);
-		if (keyboard.pressed("D"))
-			_mesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), -rotateAngle);
-		}
-		else{
-				_mesh.translateZ(5);
-		}
-	this.detectMesh.position=_mesh.position;
-
-
-
-	}
+        keyboard.update = function(_mesh, _camera) {
+                _mesh.add(_camera);
+                if (controls) {
+                        if (keyboard.pressed("W")) controls.moveForward(5);
+                        if (keyboard.pressed("S")) controls.moveForward(-5);
+                        if (keyboard.pressed("A")) controls.moveRight(-5);
+                        if (keyboard.pressed("D")) controls.moveRight(5);
+                }
+                this.collision(_mesh);
+                this.detectMesh.position = _mesh.position;
+        }
 
 
 export default keyboard;
