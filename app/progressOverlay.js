@@ -1,4 +1,4 @@
-import { getProgress, resetProgress } from './progress.js';
+import { getProgress, resetProgress } from './progress';
 
 export function initProgressOverlay() {
   const overlay = document.createElement('div');

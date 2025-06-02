@@ -47,3 +47,7 @@ npm test
 The game includes a service worker that caches key assets for offline use. After
 loading the site once while online, you can revisit without a network
 connection and it will continue to work.
+
+The project now provides a PWA manifest and offline fallback page so it can be
+installed on mobile devices. When offline, navigation requests show
+`offline.html`.

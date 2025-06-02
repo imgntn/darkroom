@@ -6,7 +6,7 @@ import THREEx from 'threex';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import story from 'modules/story/story.main';
 import createMagicSquare from 'modules/puzzles/magic_square';
-import { markPuzzleSolved, markItemCollected, markLevelVisited } from '../../progress.js';
+import { markPuzzleSolved, markItemCollected, markLevelVisited } from '../../progress';
 
 const keyboard = new THREEx.KeyboardState();
 let controls;
