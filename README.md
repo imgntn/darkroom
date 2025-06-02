@@ -18,7 +18,7 @@ WASD controls, press the space bar to do the action that the level says you shou
 
 ## Local Development
 
-1. Install dependencies and build the bundle:
+1. Install dependencies and build the bundle using webpack:
    ```bash
    npm install
    npm run build
@@ -33,3 +33,11 @@ Then open [http://localhost:3333](http://localhost:3333) in your browser.
 
 Use the **Mute** button (or press **M**) to toggle audio. The preference
 persists across sessions.
+
+### Running Tests
+
+Run the automated tests with Web Test Runner:
+
+```bash
+npm test
+```

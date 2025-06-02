@@ -124,10 +124,6 @@ var thisPort = process.env.PORT || 3333
           livereload: true
         },
         files: ['modules/**/*.js', 'index.html', 'modules/**/*.js', 'router.js', 'main.js', 'app.js']
-      },
-        karma: {
-        files: ['test/jasmine/specs/**/*.js', 'test/runner.js','test/jasmine/specs/**/*.html'],
-        tasks: ['default'] //NOTE the :run flag
       }
     },
 
@@ -142,81 +138,7 @@ var thisPort = process.env.PORT || 3333
       }
     },
 
-    // Unit testing is provided by Karma.  Change the two commented locations
-    // below to either: mocha, jasmine, or qunit.
-    karma: {
-      options: {
-        basePath: process.cwd(),
-        singleRun: true,
-        captureTimeout: 7000,
-        autoWatch: true,
-
-        reporters: ["progress", "coverage"],
-        browsers: ["PhantomJS"],
-
-        // Change this to the framework you want to use.
-        frameworks: ["jasmine"],
-
-        plugins: [
-          "karma-jasmine",
-          "karma-mocha",
-          "karma-qunit",
-          "karma-phantomjs-launcher",
-          "karma-coverage"
-        ],
-
-        preprocessors: {
-          "app/**/*.js": "coverage"
-        },
-
-        coverageReporter: {
-          type: "lcov",
-          dir: "test/coverage"
-        },
-
-        files: [
-          // You can optionally remove this or swap out for a different expect.
-          "vendor/bower/chai/chai.js",
-          "vendor/bower/requirejs/require.js",
-          "test/runner.js",
-
-          {
-            pattern: "app/**/*.*",
-            included: false
-          },
-          // Derives test framework from Karma configuration.
-          {
-            pattern: "test/<%= karma.options.frameworks[0] %>/**/*.spec.js",
-            included: false
-          },
-          {
-            pattern: "vendor/**/*.js",
-            included: false
-          }
-        ]
-      },
-
-      // This creates a server that will automatically run your tests when you
-      // save a file and display results in the terminal.
-      daemon: {
-        options: {
-          singleRun: false
-        }
-      },
-
-      // This is useful for running the tests just once.
-      run: {
-        options: {
-          singleRun: true
-        }
-      }
-    },
-
-    coveralls: {
-      options: {
-        coverage_dir: "test/coverage/PhantomJS 1.9.2 (Linux)/"
-      }
-    }
+    // Unit testing is handled by Web Test Runner.
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -228,8 +150,6 @@ var thisPort = process.env.PORT || 3333
   grunt.loadNpmTasks("grunt-contrib-compress");
 
   // Third-party tasks.
-  grunt.loadNpmTasks("grunt-karma");
-  grunt.loadNpmTasks("grunt-karma-coveralls");
   grunt.loadNpmTasks("grunt-processhtml");
 
   // Grunt BBB tasks.
@@ -238,7 +158,8 @@ var thisPort = process.env.PORT || 3333
   grunt.loadNpmTasks("grunt-bbb-styles");
 
   // Create an aliased test task.
-  grunt.registerTask("test", ["karma:run"]);
+  // Tests are now run with Web Test Runner
+  grunt.registerTask("test", []);
   // When running the default Grunt command, just lint the code.
   grunt.registerTask("default", [
     "clean",
