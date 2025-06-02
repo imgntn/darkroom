@@ -1,14 +1,38 @@
-define(function(require, exports, module) {
-	"use strict";
+import $ from 'jquery';
+import _ from 'underscore';
+import Backbone from 'backbone';
+import app from 'app';
+import THREEx from 'threex';
+import story from 'modules/story/story.main';
+import createMagicSquare from 'modules/puzzles/magic_square';
 
-	var $ = require("jquery");
-	var _ = require("underscore");
-	var Backbone = require("backbone");
-	var app = require("app");
-	var THREEx = require('threex');
-	var keyboard = new THREEx.KeyboardState();
+const keyboard = new THREEx.KeyboardState();
 
-	var  story = require('modules/story/story.main');
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'KeyP') {
+    document.body.requestPointerLock();
+  }
+  if (e.code === 'KeyO') {
+    createMagicSquare(() => {
+      console.log('Magic square solved');
+    });
+  }
+});
+
+document.addEventListener('pointerlockchange', () => {
+  const hint = document.getElementById('pointerHint');
+  if (hint) {
+    hint.style.display =
+      document.pointerLockElement === document.body ? 'none' : 'block';
+  }
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (document.pointerLockElement === document.body && keyboard.player) {
+    keyboard.player.rotation.y -= e.movementX * 0.002;
+    keyboard.player.rotation.x -= e.movementY * 0.002;
+  }
+});
 
  
 
@@ -266,5 +290,4 @@ for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIn
 	}
 
 
-	module.exports = keyboard;
-});
+export default keyboard;
