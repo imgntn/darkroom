@@ -3,6 +3,7 @@ import _ from 'underscore';
 import Backbone from 'backbone';
 import app from 'app';
 import THREEx from 'threex';
+import * as THREE from 'three';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import story from 'modules/story/story.main';
 import createMagicSquare from 'modules/puzzles/magic_square';
@@ -166,95 +167,50 @@ console.log('starting lizards')
 		this.collideableObjects.push(o);
 	};
 
-		keyboard.addToDetectableObjects = function(o) {
-		this.detectableObjects.push(o);
-	};
+        keyboard.addToDetectableObjects = function(o) {
+                this.detectableObjects.push(o);
+        };
 
-	keyboard.collision = function(_mesh) {
+        keyboard.collision = function(_mesh) {
+                const playerBox = new THREE.Box3().setFromObject(_mesh);
+                for (const obj of this.collideableObjects) {
+                        const objBox = new THREE.Box3().setFromObject(obj);
+                        if (playerBox.intersectsBox(objBox)) {
+                                if (obj.id === 27) keyboard.enterLevel(27);
+                                else if (obj.id === 30) keyboard.enterLevel(30);
+                                else if (obj.id === 29) keyboard.enterLevel(29);
+                                return true;
+                        }
+                }
+                return false;
+        };
 
-
-		var originPoint = _mesh.position.clone();
-for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIndex++)
-	{		
-		var localVertex = _mesh.geometry.vertices[vertexIndex].clone();
-		var globalVertex = localVertex.applyMatrix4( _mesh.matrix );
-		var directionVector = globalVertex.sub( _mesh.position );
-		
-		var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-		var collisionResults = ray.intersectObjects( this.collideableObjects );
-		if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
-			{	
-						if(collisionResults[0].object.id===27){
-								keyboard.enterLevel(27)
-								
-						}
-						else if(collisionResults[0].object.id===30){
-							keyboard.enterLevel(30)
-								
-							
-						}
-						else if(collisionResults[0].object.id===29){
-							keyboard.enterLevel(29)
-							
-							
-						}
-
-				// _.each(collisionResults,function(result){
-				// 		console.log('collision obj id:',result.object.id)
-				// 		if(result.object.id===27){
-				// 				keyboard.enterLevel(27)
-								
-				// 		}
-				// 		else if(result.object.id===30){
-				// 			keyboard.enterLevel(30)
-								
-							
-				// 		}
-				// 		else if(result.object.id===29){
-				// 			keyboard.enterLevel(29)
-							
-							
-				// 		}
-					
-				// 	})
-			
-					return true
-			}
-
-	}	
-	},
 
 keyboard.detectObjects = function(interact = false) {
-                var _mesh = this.detectMesh;
-                var originPoint = _mesh.position.clone();
+                const _mesh = this.detectMesh;
+                const origin = _mesh.position.clone();
+                const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(_mesh.quaternion).normalize();
+                const ray = new THREE.Raycaster(origin, direction);
+                const collisionResults = ray.intersectObjects(this.detectableObjects);
                 const crosshair = document.getElementById('crosshair');
                 let hit = false;
                 let hitObj = null;
-                for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIndex++) {
-                        var localVertex = _mesh.geometry.vertices[vertexIndex].clone();
-                        var globalVertex = localVertex.applyMatrix4(_mesh.matrix);
-                        var directionVector = globalVertex.sub(_mesh.position);
-
-                        var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
-                        var collisionResults = ray.intersectObjects(this.detectableObjects);
-                        if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length()) {
-                                hit = true;
-                                hitObj = collisionResults[0].object;
-                                if (interact) {
-                                        _.each(collisionResults, function(result) {
-                                                if (result.object.id === 75) {
-                                                        keyboard.enterLevel('darkroom');
-                                                        $('#itemText').text('You rescued the jewelry box.').fadeIn('slow').delay(3500).fadeOut('slow');
-                                                        markItemCollected('jewelryBox');
-                                                }
-                                                if (result.object.id === 123) {
-                                                        keyboard.enterLevel('darkroom');
-                                                        $('#itemText').text('You found the letter.').fadeIn('slow').delay(3500).fadeOut('slow');
-                                                        markItemCollected('letter');
-                                                }
-                                        });
-                                }
-                                break;
+                if (collisionResults.length > 0) {
+                        hit = true;
+                        hitObj = collisionResults[0].object;
+                        if (interact) {
+                                _.each(collisionResults, function(result) {
+                                        if (result.object.id === 75) {
+                                                keyboard.enterLevel('darkroom');
+                                                $('#itemText').text('You rescued the jewelry box.').fadeIn('slow').delay(3500).fadeOut('slow');
+                                                markItemCollected('jewelryBox');
+                                        }
+                                        if (result.object.id === 123) {
+                                                keyboard.enterLevel('darkroom');
+                                                $('#itemText').text('You found the letter.').fadeIn('slow').delay(3500).fadeOut('slow');
+                                                markItemCollected('letter');
+                                        }
+                                });
                         }
                 }
                 if (crosshair) {
