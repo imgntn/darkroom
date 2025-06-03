@@ -1,4 +1,4 @@
-import { getProgress, resetProgress, getBestPuzzleTime, resetPuzzleTimes } from './progress';
+import { getProgress, resetProgress, getBestPuzzleTime, resetPuzzleTimes, getPuzzleTimesSorted } from './progress';
 
 export function initProgressOverlay() {
   const overlay = document.createElement('div');
@@ -11,6 +11,8 @@ export function initProgressOverlay() {
     <ul id="itemsList"></ul>
     <div id="puzzleStatus"></div>
     <div id="bestTime"></div>
+    <div>All Times:</div>
+    <ul id="timesList"></ul>
     <button id="resetPuzzleTimes">Reset Puzzle Times</button>
     <button id="resetProgress">Reset Progress</button>
   `;
@@ -25,6 +27,9 @@ export function initProgressOverlay() {
     overlay.querySelector('#puzzleStatus').textContent = prog.puzzleSolved ? 'Puzzle solved!' : 'Puzzle not solved';
     const best = getBestPuzzleTime();
     overlay.querySelector('#bestTime').textContent = best != null ? `Fastest Time: ${(best/1000).toFixed(1)}s` : 'No puzzle times yet';
+    const timesList = overlay.querySelector('#timesList');
+    const times = getPuzzleTimesSorted();
+    timesList.innerHTML = times.length ? times.map(t => `<li>${(t/1000).toFixed(1)}s</li>`).join('') : '<li>None</li>';
   }
 
   overlay.querySelector('#resetProgress').addEventListener('click', () => {

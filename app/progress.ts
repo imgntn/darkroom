@@ -57,6 +57,10 @@ export function getBestPuzzleTime(): number | null {
   return Math.min(...progress.puzzleTimes);
 }
 
+export function getPuzzleTimesSorted(): number[] {
+  return progress.puzzleTimes.slice().sort((a, b) => a - b);
+}
+
 export function getProgress(): ProgressState {
   return progress;
 }
