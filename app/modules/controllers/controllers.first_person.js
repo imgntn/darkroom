@@ -35,10 +35,10 @@ document.addEventListener('keydown', (e) => {
  
 
 
-        $('body').keyup(function(e) {
+ $('body').keyup(function(e) {
 
  if(e.which===32){
-        var canInteract=keyboard.detectObjects()
+        var canInteract=keyboard.detectObjects(true)
  }
  else if(e.which===77){
         var bg = document.getElementById('bgMusic');
@@ -221,40 +221,43 @@ for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIn
 	}	
 	},
 
-keyboard.detectObjects = function() {
-console.log('player pos:',keyboard.player.position,keyboard.player.rotation)
-		var _mesh=this.detectMesh
-		var originPoint = _mesh.position.clone();
-for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIndex++)
-	{		
-		var localVertex = _mesh.geometry.vertices[vertexIndex].clone();
-		var globalVertex = localVertex.applyMatrix4( _mesh.matrix );
-		var directionVector = globalVertex.sub( _mesh.position );
-		
-		var ray = new THREE.Raycaster( originPoint, directionVector.clone().normalize() );
-		var collisionResults = ray.intersectObjects( this.detectableObjects );
-		if ( collisionResults.length > 0 && collisionResults[0].distance < directionVector.length() ) 
-			{	
-                                        _.each(collisionResults,function(result){
-                                                console.log('result obj id:',result.object.id)
-                                                if(result.object.id===75){
-                                                        keyboard.enterLevel('darkroom')
-                                                   $('#itemText').text('You rescued the jewelry box.').fadeIn('slow').delay(3500).fadeOut('slow')
-                                                   markItemCollected('jewelryBox');
-                                                        }
-                                                   if(result.object.id===123){
-                                                        keyboard.enterLevel('darkroom')
-                                                   $('#itemText').text('You found the letter.').fadeIn('slow').delay(3500).fadeOut('slow')
-                                                   markItemCollected('letter');
-                                                        }
-					
-					})
-					console.log('detection results:',collisionResults)
-					return true
-			}
+keyboard.detectObjects = function(interact = false) {
+                var _mesh = this.detectMesh;
+                var originPoint = _mesh.position.clone();
+                const crosshair = document.getElementById('crosshair');
+                let hit = false;
+                for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIndex++) {
+                        var localVertex = _mesh.geometry.vertices[vertexIndex].clone();
+                        var globalVertex = localVertex.applyMatrix4(_mesh.matrix);
+                        var directionVector = globalVertex.sub(_mesh.position);
 
-	}	
-	},
+                        var ray = new THREE.Raycaster(originPoint, directionVector.clone().normalize());
+                        var collisionResults = ray.intersectObjects(this.detectableObjects);
+                        if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length()) {
+                                hit = true;
+                                if (interact) {
+                                        _.each(collisionResults, function(result) {
+                                                if (result.object.id === 75) {
+                                                        keyboard.enterLevel('darkroom');
+                                                        $('#itemText').text('You rescued the jewelry box.').fadeIn('slow').delay(3500).fadeOut('slow');
+                                                        markItemCollected('jewelryBox');
+                                                }
+                                                if (result.object.id === 123) {
+                                                        keyboard.enterLevel('darkroom');
+                                                        $('#itemText').text('You found the letter.').fadeIn('slow').delay(3500).fadeOut('slow');
+                                                        markItemCollected('letter');
+                                                }
+                                        });
+                                }
+                                break;
+                        }
+                }
+                if (crosshair) {
+                        if (hit) crosshair.classList.add('interactable');
+                        else crosshair.classList.remove('interactable');
+                }
+                return hit;
+        },
         keyboard.update = function(_mesh, _camera) {
                 _mesh.add(_camera);
                 if (controls) {
@@ -265,6 +268,7 @@ for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIn
                 }
                 this.collision(_mesh);
                 this.detectMesh.position = _mesh.position;
+                this.detectObjects(false);
         }
 
 
