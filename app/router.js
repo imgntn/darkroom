@@ -2,7 +2,7 @@ import Backbone from 'backbone';
 import * as THREE from 'three';
 import cameraMain from 'modules/cameras/cameras.main';
 import darkroom from 'modules/levels/levels.darkroom';
-import { loadLevel, getLoadedLevel } from './levelLoader.js';
+import { loadLevel, getLoadedLevel, prefetchLevel } from './levelLoader.js';
 import rendererMain from 'modules/renderers/renderers.main';
 import keyboard from 'modules/controllers/controllers.first_person';
 import story from 'modules/story/story.main';
@@ -125,6 +125,11 @@ export default Backbone.Router.extend({
         var renderer = rendererMain;
         renderer.autoClear = false;
         renderer.setSize(window.innerWidth , window.innerHeight)
+        window.addEventListener('resize', () => {
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          cameraMain.aspect = window.innerWidth / window.innerHeight;
+          cameraMain.updateProjectionMatrix();
+        });
         currentScene.set('renderer', renderer);
         $('#loader').hide();
         document.body.appendChild(renderer.domElement);
@@ -175,7 +180,10 @@ export default Backbone.Router.extend({
         keyboard.addToCollideableObjects(divider2)
         keyboard.addToCollideableObjects(divider3)
         keyboard.addToCollideableObjects(divider4)
-     
+
+        const prefetchNames = ['burningbox','dinner_party','train','procession_of_lizards'];
+        prefetchNames.forEach(name => prefetchLevel(name));
+
         // story.makeStoryElement(2);
         // story.makeStoryElement(3);
         // story.makeStoryElement(4);

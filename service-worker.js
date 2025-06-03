@@ -8,7 +8,15 @@ const ASSETS = [
   '/dist/bundle.js',
   '/app/styles/index.css',
   '/app/sound/darkRoomSONG.mp3',
-  '/app/sound/vocal0.mp3'
+  '/app/sound/vocal0.mp3',
+  '/app/modules/levels/levels.burningbox.js',
+  '/app/modules/cameras/cameras.burningbox.js',
+  '/app/modules/levels/levels.dinner_party.js',
+  '/app/modules/cameras/cameras.dinner_party.js',
+  '/app/modules/levels/levels.procession_of_lizards.js',
+  '/app/modules/cameras/cameras.procession_of_lizards.js',
+  '/app/modules/levels/levels.train.js',
+  '/app/modules/cameras/cameras.train.js'
 ];
 
 self.addEventListener('install', event => {
@@ -33,6 +41,14 @@ self.addEventListener('fetch', event => {
     return;
   }
   event.respondWith(
-    caches.match(event.request).then(resp => resp || fetch(event.request))
+    caches.match(event.request).then(resp => {
+      if (resp) return resp;
+      return fetch(event.request).then(netResp => {
+        if (event.request.url.includes('/modules/')) {
+          caches.open(CACHE_NAME).then(c => c.put(event.request, netResp.clone()));
+        }
+        return netResp;
+      });
+    })
   );
 });

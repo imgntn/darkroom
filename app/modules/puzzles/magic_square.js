@@ -1,4 +1,7 @@
+import { startPuzzle } from '../../progress';
+
 export default function createMagicSquare(onSolved) {
+  startPuzzle();
   const target = [
     [8, 1, 6],
     [3, 5, 7],
