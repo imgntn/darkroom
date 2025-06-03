@@ -16,7 +16,8 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-cli": "~0.1.13",
     "typescript": "^5.2.2",
-    "ts-loader": "^9.4.4"
+    "ts-loader": "^9.4.4",
+    "workbox-webpack-plugin": "^6.5.4"
   },
   "peerDependencies": {
     "generator-bbb": "*",

@@ -25,38 +25,38 @@ function hideLoading() {
 const loaders = {
   burningbox: () => Promise.all([
     import(/* webpackChunkName: "burningbox" */ './modules/levels/levels.burningbox.js'),
-    import(/* webpackChunkName: "camera-burningbox" */ './modules/cameras/cameras.burningbox.js')
+    import(/* webpackChunkName: "camera-burningbox" */ './modules/cameras/cameras.burningbox')
   ]),
   dinner_party: () => Promise.all([
     import(/* webpackChunkName: "dinner_party" */ './modules/levels/levels.dinner_party.js'),
-    import(/* webpackChunkName: "camera-dinner_party" */ './modules/cameras/cameras.dinner_party.js')
+    import(/* webpackChunkName: "camera-dinner_party" */ './modules/cameras/cameras.dinner_party')
   ]),
   procession_of_lizards: () => Promise.all([
     import(/* webpackChunkName: "lizards" */ './modules/levels/levels.procession_of_lizards.js'),
-    import(/* webpackChunkName: "camera-lizards" */ './modules/cameras/cameras.procession_of_lizards.js')
+    import(/* webpackChunkName: "camera-lizards" */ './modules/cameras/cameras.procession_of_lizards')
   ]),
   train: () => Promise.all([
     import(/* webpackChunkName: "train" */ './modules/levels/levels.train.js'),
-    import(/* webpackChunkName: "camera-train" */ './modules/cameras/cameras.train.js')
+    import(/* webpackChunkName: "camera-train" */ './modules/cameras/cameras.train')
   ])
 };
 
 const prefetchers = {
   burningbox: () => {
     import(/* webpackPrefetch: true */ './modules/levels/levels.burningbox.js');
-    import(/* webpackPrefetch: true */ './modules/cameras/cameras.burningbox.js');
+    import(/* webpackPrefetch: true */ './modules/cameras/cameras.burningbox');
   },
   dinner_party: () => {
     import(/* webpackPrefetch: true */ './modules/levels/levels.dinner_party.js');
-    import(/* webpackPrefetch: true */ './modules/cameras/cameras.dinner_party.js');
+    import(/* webpackPrefetch: true */ './modules/cameras/cameras.dinner_party');
   },
   procession_of_lizards: () => {
     import(/* webpackPrefetch: true */ './modules/levels/levels.procession_of_lizards.js');
-    import(/* webpackPrefetch: true */ './modules/cameras/cameras.procession_of_lizards.js');
+    import(/* webpackPrefetch: true */ './modules/cameras/cameras.procession_of_lizards');
   },
   train: () => {
     import(/* webpackPrefetch: true */ './modules/levels/levels.train.js');
-    import(/* webpackPrefetch: true */ './modules/cameras/cameras.train.js');
+    import(/* webpackPrefetch: true */ './modules/cameras/cameras.train');
   }
 };
 

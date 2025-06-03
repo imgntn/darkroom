@@ -1,4 +1,5 @@
 const path = require('path');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
   entry: './app/main.ts',
@@ -29,5 +30,12 @@ module.exports = {
       modules: path.resolve(__dirname, 'app/modules')
     }
   },
+  plugins: [
+    new WorkboxPlugin.InjectManifest({
+      swSrc: './service-worker.js',
+      swDest: '../service-worker.js',
+      additionalManifestEntries: [{url: '/offline.html', revision: null}]
+    })
+  ],
   mode: 'production'
 };
