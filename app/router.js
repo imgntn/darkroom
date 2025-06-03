@@ -8,6 +8,7 @@ import keyboard from 'modules/controllers/controllers.first_person';
 import story from 'modules/story/story.main';
 import { getProgress } from './progress';
 import { initTouchControls } from './touchControls.js';
+import { initGamepadControls } from './gamepadControls.js';
 
 export default Backbone.Router.extend({
     routes: {
@@ -118,6 +119,7 @@ export default Backbone.Router.extend({
         currentScene.set('level', darkroom);
         keyboard.initPointerLock(cameraMain);
         initTouchControls();
+        initGamepadControls();
  
   
 

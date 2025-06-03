@@ -42,6 +42,12 @@ Run the automated tests with Web Test Runner:
 npm test
 ```
 
+### Sharing Progress
+
+Use the **Share Progress** button in the progress overlay (press **P** to open) to
+share your best puzzle time and current level. The feature uses the Web Share API
+when available and falls back to copying text to the clipboard.
+
 ### Offline Play
 
 The game includes a service worker that caches key assets for offline use. After
