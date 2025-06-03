@@ -1,5 +1,27 @@
 import { getProgress, resetProgress, getBestPuzzleTime, resetPuzzleTimes, getPuzzleTimesSorted } from './progress';
 import keyboard from 'modules/controllers/controllers.first_person';
+import { motionEnabled, enableMotionControls, disableMotionControls } from './motionControls.js';
+
+export function formatShareText() {
+  const best = getBestPuzzleTime();
+  const prog = getProgress();
+  const level = prog.currentLevel != null ? prog.currentLevel : 'unknown';
+  const bestText = best != null ? `${(best/1000).toFixed(1)}s` : 'N/A';
+  return `I'm on level ${level} with a best puzzle time of ${bestText} in The Dark Room!`;
+}
+
+export async function shareProgress() {
+  const text = formatShareText();
+  if (navigator.share) {
+    try { await navigator.share({ text }); return; } catch (e) { /* ignore */ }
+  }
+  try {
+    await navigator.clipboard.writeText(text);
+    alert('Progress copied to clipboard');
+  } catch (e) {
+    alert(text);
+  }
+}
 
 export function initProgressOverlay() {
   const overlay = document.createElement('div');
@@ -19,6 +41,8 @@ export function initProgressOverlay() {
     <button id="goLevel">Go</button>
     <button id="resetPuzzleTimes">Reset Puzzle Times</button>
     <button id="resetProgress">Reset Progress</button>
+    <button id="shareProgress">Share Progress</button>
+    <button id="toggleMotion">Enable Motion Controls</button>
   `;
   document.body.appendChild(overlay);
 
@@ -38,6 +62,7 @@ export function initProgressOverlay() {
     select.innerHTML = Object.keys(prog.levels).map(l => `<option value="${l}" ${prog.currentLevel==l?'selected':''}>${l}</option>`).join('');
   }
 
+
   overlay.querySelector('#resetProgress').addEventListener('click', () => {
     resetProgress();
     update();
@@ -52,6 +77,18 @@ export function initProgressOverlay() {
     const select = overlay.querySelector('#levelSelect');
     if (select && select.value) {
       keyboard.enterLevel(select.value);
+    }
+  });
+
+  overlay.querySelector('#shareProgress').addEventListener('click', shareProgress);
+
+  overlay.querySelector('#toggleMotion').addEventListener('click', () => {
+    if (motionEnabled()) {
+      disableMotionControls();
+      overlay.querySelector('#toggleMotion').textContent = 'Enable Motion Controls';
+    } else {
+      enableMotionControls();
+      overlay.querySelector('#toggleMotion').textContent = 'Disable Motion Controls';
     }
   });
 

@@ -10,6 +10,8 @@ import createMagicSquare from 'modules/puzzles/magic_square';
 import { markPuzzleSolved, markItemCollected, markLevelVisited, setCurrentLevel } from '../../progress';
 import { highlight, removeHighlight } from '../../highlightManager.js';
 import { initTouchControls, getMove, getLook } from '../../touchControls.js';
+import { initGamepadControls, getGamepadMove, getGamepadLook } from '../../gamepadControls.js';
+import { getMotionMove, getMotionLook } from '../../motionControls.js';
 
 const keyboard = new THREEx.KeyboardState();
 let controls;
@@ -223,16 +225,26 @@ keyboard.detectObjects = function(interact = false) {
         keyboard.update = function(_mesh, _camera) {
                 _mesh.add(_camera);
                 if (controls) {
-                        const move = getMove();
-                        if (keyboard.pressed("W") || move.forward) controls.moveForward(5);
-                        if (keyboard.pressed("S") || move.backward) controls.moveForward(-5);
-                        if (keyboard.pressed("A") || move.left) controls.moveRight(-5);
-                        if (keyboard.pressed("D") || move.right) controls.moveRight(5);
-                        const look = getLook();
-                        if (look.dx || look.dy) {
+                        const moveTouch = getMove();
+                        const movePad = getGamepadMove();
+                        const moveMotion = getMotionMove();
+                        const forward = moveTouch.forward || movePad.forward || moveMotion.forward;
+                        const backward = moveTouch.backward || movePad.backward || moveMotion.backward;
+                        const left = moveTouch.left || movePad.left || moveMotion.left;
+                        const right = moveTouch.right || movePad.right || moveMotion.right;
+                        if (keyboard.pressed("W") || forward) controls.moveForward(5);
+                        if (keyboard.pressed("S") || backward) controls.moveForward(-5);
+                        if (keyboard.pressed("A") || left) controls.moveRight(-5);
+                        if (keyboard.pressed("D") || right) controls.moveRight(5);
+                        const lookTouch = getLook();
+                        const lookPad = getGamepadLook();
+                        const lookMotion = getMotionLook();
+                        const dx = lookTouch.dx + lookPad.dx + lookMotion.dx;
+                        const dy = lookTouch.dy + lookPad.dy + lookMotion.dy;
+                        if (dx || dy) {
                                 const obj = controls.getObject();
-                                obj.rotation.y -= look.dx * 0.002;
-                                _camera.rotation.x -= look.dy * 0.002;
+                                obj.rotation.y -= dx * 0.002;
+                                _camera.rotation.x -= dy * 0.002;
                         }
                 }
                 this.collision(_mesh);
