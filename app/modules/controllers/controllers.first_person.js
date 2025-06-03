@@ -6,7 +6,9 @@ import THREEx from 'threex';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import story from 'modules/story/story.main';
 import createMagicSquare from 'modules/puzzles/magic_square';
-import { markPuzzleSolved, markItemCollected, markLevelVisited } from '../../progress';
+import { markPuzzleSolved, markItemCollected, markLevelVisited, setCurrentLevel } from '../../progress';
+import { highlight, removeHighlight } from '../../highlightManager.js';
+import { initTouchControls, getMove, getLook } from '../../touchControls.js';
 
 const keyboard = new THREEx.KeyboardState();
 let controls;
@@ -110,9 +112,10 @@ keyboard.rotations.train={	x: 0, y: -0.10000000000000063, z: 0}
 	keyboard.player.rotation.z=rotation.z;	
 	}
 	}
-        keyboard.enterLevel=async function(id){
-                markLevelVisited(id);
-                await app.router.loadLevelById(id);
+       keyboard.enterLevel=async function(id){
+               markLevelVisited(id);
+               setCurrentLevel(id);
+               await app.router.loadLevelById(id);
                 if(id==="darkroom"){
 $('#goalText').text('');
 keyboard.relocatePlayer(keyboard.locations.darkroom)
@@ -226,6 +229,7 @@ keyboard.detectObjects = function(interact = false) {
                 var originPoint = _mesh.position.clone();
                 const crosshair = document.getElementById('crosshair');
                 let hit = false;
+                let hitObj = null;
                 for (var vertexIndex = 0; vertexIndex < _mesh.geometry.vertices.length; vertexIndex++) {
                         var localVertex = _mesh.geometry.vertices[vertexIndex].clone();
                         var globalVertex = localVertex.applyMatrix4(_mesh.matrix);
@@ -235,6 +239,7 @@ keyboard.detectObjects = function(interact = false) {
                         var collisionResults = ray.intersectObjects(this.detectableObjects);
                         if (collisionResults.length > 0 && collisionResults[0].distance < directionVector.length()) {
                                 hit = true;
+                                hitObj = collisionResults[0].object;
                                 if (interact) {
                                         _.each(collisionResults, function(result) {
                                                 if (result.object.id === 75) {
@@ -256,15 +261,23 @@ keyboard.detectObjects = function(interact = false) {
                         if (hit) crosshair.classList.add('interactable');
                         else crosshair.classList.remove('interactable');
                 }
+                if (hit) highlight(hitObj); else removeHighlight();
                 return hit;
         },
         keyboard.update = function(_mesh, _camera) {
                 _mesh.add(_camera);
                 if (controls) {
-                        if (keyboard.pressed("W")) controls.moveForward(5);
-                        if (keyboard.pressed("S")) controls.moveForward(-5);
-                        if (keyboard.pressed("A")) controls.moveRight(-5);
-                        if (keyboard.pressed("D")) controls.moveRight(5);
+                        const move = getMove();
+                        if (keyboard.pressed("W") || move.forward) controls.moveForward(5);
+                        if (keyboard.pressed("S") || move.backward) controls.moveForward(-5);
+                        if (keyboard.pressed("A") || move.left) controls.moveRight(-5);
+                        if (keyboard.pressed("D") || move.right) controls.moveRight(5);
+                        const look = getLook();
+                        if (look.dx || look.dy) {
+                                const obj = controls.getObject();
+                                obj.rotation.y -= look.dx * 0.002;
+                                _camera.rotation.x -= look.dy * 0.002;
+                        }
                 }
                 this.collision(_mesh);
                 this.detectMesh.position = _mesh.position;

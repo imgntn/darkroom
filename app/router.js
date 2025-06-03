@@ -6,6 +6,8 @@ import { loadLevel, getLoadedLevel, prefetchLevel } from './levelLoader.js';
 import rendererMain from 'modules/renderers/renderers.main';
 import keyboard from 'modules/controllers/controllers.first_person';
 import story from 'modules/story/story.main';
+import { getProgress } from './progress';
+import { initTouchControls } from './touchControls.js';
 
 export default Backbone.Router.extend({
     routes: {
@@ -115,6 +117,7 @@ export default Backbone.Router.extend({
         currentScene.set('cameraMain', cameraMain);
         currentScene.set('level', darkroom);
         keyboard.initPointerLock(cameraMain);
+        initTouchControls();
  
   
 
@@ -192,7 +195,8 @@ export default Backbone.Router.extend({
 
       init();
       animate();
-      keyboard.enterLevel(27)
+      const prog = getProgress();
+      keyboard.enterLevel(prog.currentLevel || 27)
 
     }
   });

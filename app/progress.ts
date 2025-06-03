@@ -4,6 +4,7 @@ export interface ProgressState {
   puzzleSolved: boolean;
   puzzleTimes: number[];
   currentAttemptStart?: number;
+  currentLevel?: string | number;
 }
 
 export function loadProgress(): ProgressState {
@@ -12,10 +13,11 @@ export function loadProgress(): ProgressState {
       levels: {},
       items: {},
       puzzleSolved: false,
-      puzzleTimes: []
+      puzzleTimes: [],
+      currentLevel: undefined
     };
   } catch (e) {
-    return { levels: {}, items: {}, puzzleSolved: false, puzzleTimes: [] };
+    return { levels: {}, items: {}, puzzleSolved: false, puzzleTimes: [], currentLevel: undefined };
   }
 }
 
@@ -28,6 +30,11 @@ export function startPuzzle(): void {
 
 export function markLevelVisited(id: string): void {
   progress.levels[id] = true;
+  save();
+}
+
+export function setCurrentLevel(id: string | number): void {
+  progress.currentLevel = id;
   save();
 }
 
@@ -66,7 +73,7 @@ export function getProgress(): ProgressState {
 }
 
 export function resetProgress(): void {
-  progress = { levels: {}, items: {}, puzzleSolved: false, puzzleTimes: [] };
+  progress = { levels: {}, items: {}, puzzleSolved: false, puzzleTimes: [], currentLevel: undefined };
   save();
 }
 
