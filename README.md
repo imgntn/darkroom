@@ -24,6 +24,13 @@ WASD controls, press the space bar to do the action that the level says you shou
    npm run build
    ```
 
+To automatically rebuild and serve the game with hot module replacement during
+development, run:
+
+```bash
+npm run dev
+```
+
 2. Start the server:
    ```bash
    npm start

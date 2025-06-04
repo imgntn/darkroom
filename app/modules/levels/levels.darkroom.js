@@ -123,16 +123,20 @@ define(function(require, exports, module) {
 	var painting5 = textHandler.makeText(burningbox.staticObjects[9][4]);
 	var painting6 = textHandler.makeText(burningbox.staticObjects[9][5]);
 
-	var fire1 = textHandler.makeText(burningbox.staticObjects[10][0]);
-	var fire2 = textHandler.makeText(burningbox.staticObjects[10][1]);
-	var fire3 = textHandler.makeText(burningbox.staticObjects[10][2]);
-	var fire4 = textHandler.makeText(burningbox.staticObjects[10][3]);
-	var fire5 = textHandler.makeText(burningbox.staticObjects[10][4]);
-	var fire6 = textHandler.makeText(burningbox.staticObjects[10][5]);
-	var fire7 = textHandler.makeText(burningbox.staticObjects[10][6]);
-	var fire8 = textHandler.makeText(burningbox.staticObjects[10][7]);
-	var fire9 = textHandler.makeText(burningbox.staticObjects[10][8]);
-	var fire10 = textHandler.makeText(burningbox.staticObjects[10][9]);
+        var instancedHelper = require('../utils/instancedMeshHelper');
+        var BoxGeometry = require('../geometries/geometries.cube_basic');
+        var fireMaterial = new THREE.MeshBasicMaterial({ color: 0xff5500 });
+        var fireTransforms = [
+                { position: [2850,0,-1300], scale:[2,8,4] },
+                { position: [2200,200,-700], rotation:[0,Math.PI/2,0], scale:[4,8,4]},
+                { position: [3500,100,1350], rotation:[0,Math.PI/2,0], scale:[3,5,1]},
+                { position: [3500,100,1000], rotation:[0,Math.PI/2,0], scale:[3,5,1]},
+                { position: [4250,200,-1300], rotation:[0,-Math.PI/2,0], scale:[4,8,4]},
+                { position: [4150,0,-800], rotation:[0,-Math.PI/2,0], scale:[2,6,2]},
+                { position: [5500,200,900], rotation:[0,Math.PI,0], scale:[4,14,8]}
+        ];
+        var firesMesh = instancedHelper.createMesh(new BoxGeometry(), fireMaterial, fireTransforms);
+        
 
 	var jewelrybox1 = textHandler.makeText(burningbox.staticObjects[11][0]);
 
@@ -158,7 +162,6 @@ define(function(require, exports, module) {
 	var stairs = [stairs1];
 	var bannisters = [bannister1];
 	var paintings = [painting1, painting2, painting3, painting4, painting5, painting6];
-	var fires = [fire1, fire2, fire3, fire4, fire5, fire6, fire7, fire8, fire9, fire10];
 	var jewelryboxes = [jewelrybox1];
 	var clothes = [clothes1, clothes2, clothes3, clothes4];
 	var pillows = [pillow1, pillow2, pillow3, pillow4]
@@ -285,41 +288,8 @@ define(function(require, exports, module) {
 	// painting6.position.set();
 
 
-	fire1.position.set(2850,0,-1300);
-	fire1.scale=new THREE.Vector3(2,8,4);
-
-	fire2.position.set(2200,200,-700);
-	fire2.scale=new THREE.Vector3(4,8,4);
-    fire2.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI/2);
-
-
-	fire3.position.set(3500,100,1350);
-	fire3.scale=new THREE.Vector3(3,5,1)
-	fire3.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI/2);
-
-	fire4.position.set(3500,100,1000);
-	fire4.scale=new THREE.Vector3(3,5,1)
-	fire4.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI/2);
-
-	fire5.position.set(4250,200,-1300);
-	fire5.scale=new THREE.Vector3(4,8,4);
-    fire5.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI/2);
-
-    fire6.position.set(4150,0,-800);
-	fire6.scale=new THREE.Vector3(2,6,2);
-    fire6.rotateOnAxis(new THREE.Vector3(0, 1, 0), -Math.PI/2);
- 
-	fire7.position.set();
-	fire7.position.set(5500,200,900);
-	fire7.rotateOnAxis(new THREE.Vector3( 0, 1, 0 ), Math.PI);
-	// fire7.rotateOnAxis(new THREE.Vector3( 0, 0, 1 ), -Math.PI);
-	fire7.scale=new THREE.Vector3(4,14,8);
-_.each(fires,function(thisFire){
-	keyboard.addToDetectableObjects(thisFire);
-})
-	// fire8.position.set();
-	// fire9.position.set();
-	// fire10.position.set();
+        scene.add(firesMesh);
+        keyboard.addToDetectableObjects(firesMesh);
 
 
 
@@ -359,12 +329,12 @@ _.each(fires,function(thisFire){
 
 
 
-var objectArrays=[singlebeds,doublebeds,smalltables,mirrors,dressers,walls,windows,stairs,bannisters,paintings,fires,jewelryboxes,clothes,pillows]
-	_.each(objectArrays,function(oa){
-		_.each(oa,function(obj){
-			scene.add(obj)
-		})
-	})
+var objectArrays=[singlebeds,doublebeds,smalltables,mirrors,dressers,walls,windows,stairs,bannisters,paintings,jewelryboxes,clothes,pillows]
+        _.each(objectArrays,function(oa){
+                _.each(oa,function(obj){
+                        scene.add(obj)
+                })
+        })
 
 
 //To Catch a Train
