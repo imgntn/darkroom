@@ -15,6 +15,34 @@ export default function createMagicSquare(onSolved) {
 
   const container = document.createElement('div');
   container.id = 'magicSquare';
+  const timerEl = document.createElement('div');
+  timerEl.id = 'puzzleTimer';
+  container.appendChild(timerEl);
+  const grid = document.createElement('div');
+  grid.id = 'magicGrid';
+  grid.style.display = 'grid';
+  grid.style.gridTemplateColumns = 'repeat(3, 50px)';
+  grid.style.gridGap = '5px';
+  container.appendChild(grid);
+
+  const keypad = document.createElement('div');
+  keypad.id = 'magicKeypad';
+  keypad.style.marginTop = '10px';
+  keypad.style.display = 'grid';
+  keypad.style.gridTemplateColumns = 'repeat(3, 40px)';
+  keypad.style.gridGap = '5px';
+  container.appendChild(keypad);
+
+  let selected = null;
+
+  function updateTimer(start) {
+    const now = Date.now();
+    timerEl.textContent = ((now - start) / 1000).toFixed(1) + 's';
+    if (!container.classList.contains('solved')) {
+      requestAnimationFrame(() => updateTimer(start));
+    }
+  }
+  updateTimer(Date.now());
 
   function check() {
     for (let i = 0; i < 3; i++) {
@@ -37,17 +65,26 @@ export default function createMagicSquare(onSolved) {
       cell.dataset.col = j;
       cell.textContent = '';
       cell.addEventListener('click', () => {
-        const val = prompt('Enter number 1-9');
-        if (!val) return;
-        const n = parseInt(val, 10);
-        cell.textContent = n;
-        state[i][j] = n;
-        check();
+        selected = cell;
       });
-      container.appendChild(cell);
+      grid.appendChild(cell);
     }
+  }
+
+  for (let n = 1; n <= 9; n++) {
+    const btn = document.createElement('div');
+    btn.className = 'magic-key';
+    btn.textContent = String(n);
+    btn.addEventListener('click', () => {
+      if (!selected) return;
+      selected.textContent = String(n);
+      const r = parseInt(selected.dataset.row, 10);
+      const c = parseInt(selected.dataset.col, 10);
+      state[r][c] = n;
+      check();
+    });
+    keypad.appendChild(btn);
   }
 
   document.body.appendChild(container);
 }
-

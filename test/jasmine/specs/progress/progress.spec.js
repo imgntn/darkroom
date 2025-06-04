@@ -30,5 +30,19 @@ define(function(require) {
     expect(progress.getProgress().puzzleTimes[0]).toBe(2000);
     expect(progress.getBestPuzzleTime()).toBe(2000);
   });
+
+  it('tracks multiple puzzle attempts', function() {
+    progress.resetProgress();
+    progress.startPuzzle();
+    jasmine.clock().install();
+    jasmine.clock().tick(1500);
+    progress.markPuzzleSolved();
+    progress.startPuzzle();
+    jasmine.clock().tick(1000);
+    progress.markPuzzleSolved();
+    jasmine.clock().uninstall();
+    expect(progress.getProgress().puzzleTimes.length).toBe(2);
+    expect(progress.getBestPuzzleTime()).toBe(1000);
+  });
   });
 });

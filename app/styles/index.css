@@ -82,10 +82,35 @@ margin-top:200px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.8);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#magicGrid {
   display: grid;
   grid-template-columns: repeat(3, 50px);
-  grid-template-rows: repeat(3, 50px);
   gap: 5px;
+}
+
+#magicKeypad {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 40px);
+  gap: 5px;
+}
+
+.magic-key {
+  width: 40px;
+  height: 40px;
+  background: #333;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .magic-cell {
@@ -140,4 +165,26 @@ margin-top:200px;
 #joystickRight { right: 20px; }
 @media (min-width: 800px) {
   #joystickLeft, #joystickRight { display: none; }
+}
+
+#helpOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.9);
+  color: white;
+  padding: 20px;
+  z-index: 1000;
+}
+#helpOverlay h2, #helpOverlay h3 {
+  margin: 0 0 5px;
+}
+#helpOverlay button {
+  margin-top: 10px;
+}
+
+#puzzleTimer {
+  margin-bottom: 5px;
+  color: #fff;
 }
