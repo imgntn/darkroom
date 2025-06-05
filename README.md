@@ -19,6 +19,7 @@ For an in-depth guide covering installation, controls, and offline support, see
 - **Fullscreen Mode** – Press `F` or use the on-screen button for fullscreen.
 - **Share Progress** – Share your best times via the Web Share API.
 - **Offline Support** – Works without a network connection after first load.
+- **Customizable Controls** – Press `Escape` to remap movement and interaction keys.
 
 with:
 
@@ -30,6 +31,7 @@ dan dugan
 
 
 Use **WASD** or the **arrow keys** to move around. Press the space bar to perform the action the level requires... definitely a work in progress!
+Press **Escape** at any time to open the settings overlay and remap the movement or interaction keys. Your choices persist locally.
 Press **R** during a puzzle to quickly restart your attempt.
 
 ## Local Development

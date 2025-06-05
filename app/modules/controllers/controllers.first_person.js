@@ -12,9 +12,21 @@ import { highlight, removeHighlight } from '../../highlightManager.js';
 import { initTouchControls, getMove, getLook } from '../../touchControls.js';
 import { initGamepadControls, getGamepadMove, getGamepadLook } from '../../gamepadControls.js';
 import { getMotionMove, getMotionLook } from '../../motionControls.js';
+import { loadKeyBindings } from '../../settingsOverlay.js';
 
 const keyboard = new THREEx.KeyboardState();
 let controls;
+let keyBindings = loadKeyBindings();
+
+function eventMatches(e, alias) {
+  const name = alias.toLowerCase();
+  if (name === 'space') return e.code === 'Space';
+  if (name === 'up') return e.code === 'ArrowUp';
+  if (name === 'down') return e.code === 'ArrowDown';
+  if (name === 'left') return e.code === 'ArrowLeft';
+  if (name === 'right') return e.code === 'ArrowRight';
+  return e.key && e.key.toUpperCase() === alias.toUpperCase();
+}
 
 keyboard.initPointerLock = function(camera) {
   controls = new PointerLockControls(camera, document.body);
@@ -27,7 +39,7 @@ keyboard.initPointerLock = function(camera) {
     const hint = document.getElementById('pointerHint');
     if (hint) hint.style.display = 'block';
   });
-};
+}; 
 
 document.addEventListener('keydown', (e) => {
   if (e.code === 'KeyO') {
@@ -37,12 +49,15 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+document.addEventListener('keyBindingsSaved', (e) => {
+  keyBindings = e.detail;
+});
+
  
 
 
- $('body').keyup(function(e) {
-
- if(e.which===32){
+$('body').keyup(function(e) {
+ if(eventMatches(e, keyBindings.interact)){
         var canInteract=keyboard.detectObjects(true)
  }
  else if(e.which===77){
@@ -232,10 +247,10 @@ keyboard.detectObjects = function(interact = false) {
                         const backward = moveTouch.backward || movePad.backward || moveMotion.backward;
                         const left = moveTouch.left || movePad.left || moveMotion.left;
                         const right = moveTouch.right || movePad.right || moveMotion.right;
-                        if (keyboard.pressed("W") || keyboard.pressed("up") || forward) controls.moveForward(5);
-                        if (keyboard.pressed("S") || keyboard.pressed("down") || backward) controls.moveForward(-5);
-                        if (keyboard.pressed("A") || keyboard.pressed("left") || left) controls.moveRight(-5);
-                        if (keyboard.pressed("D") || keyboard.pressed("right") || right) controls.moveRight(5);
+                        if (keyboard.pressed(keyBindings.forward) || keyboard.pressed("up") || forward) controls.moveForward(5);
+                        if (keyboard.pressed(keyBindings.backward) || keyboard.pressed("down") || backward) controls.moveForward(-5);
+                        if (keyboard.pressed(keyBindings.left) || keyboard.pressed("left") || left) controls.moveRight(-5);
+                        if (keyboard.pressed(keyBindings.right) || keyboard.pressed("right") || right) controls.moveRight(5);
                         const lookTouch = getLook();
                         const lookPad = getGamepadLook();
                         const lookMotion = getMotionLook();
