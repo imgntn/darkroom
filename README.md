@@ -28,7 +28,7 @@ adreinne johnson
 dan dugan
 
 
-WASD controls, press the space bar to do the action that the level says you should... definitely a work in progress!
+Use **WASD** or the **arrow keys** to move around. Press the space bar to perform the action the level requires... definitely a work in progress!
 
 ## Local Development
 

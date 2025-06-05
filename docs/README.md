@@ -34,7 +34,7 @@ Then visit [http://localhost:3333](http://localhost:3333).
 
 ### Keyboard Shortcuts
 
-- **WASD** – Move around the level.
+- **WASD** or **Arrow Keys** – Move around the level.
 - **Space** – Perform the action specified in the level.
 - **M** – Toggle audio (also available via on-screen button).
 - **P** – Open the progress overlay and share your progress.

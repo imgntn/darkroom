@@ -232,10 +232,10 @@ keyboard.detectObjects = function(interact = false) {
                         const backward = moveTouch.backward || movePad.backward || moveMotion.backward;
                         const left = moveTouch.left || movePad.left || moveMotion.left;
                         const right = moveTouch.right || movePad.right || moveMotion.right;
-                        if (keyboard.pressed("W") || forward) controls.moveForward(5);
-                        if (keyboard.pressed("S") || backward) controls.moveForward(-5);
-                        if (keyboard.pressed("A") || left) controls.moveRight(-5);
-                        if (keyboard.pressed("D") || right) controls.moveRight(5);
+                        if (keyboard.pressed("W") || keyboard.pressed("up") || forward) controls.moveForward(5);
+                        if (keyboard.pressed("S") || keyboard.pressed("down") || backward) controls.moveForward(-5);
+                        if (keyboard.pressed("A") || keyboard.pressed("left") || left) controls.moveRight(-5);
+                        if (keyboard.pressed("D") || keyboard.pressed("right") || right) controls.moveRight(5);
                         const lookTouch = getLook();
                         const lookPad = getGamepadLook();
                         const lookMotion = getMotionLook();
