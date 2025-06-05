@@ -6,6 +6,7 @@ import { initFullscreenToggle } from './fullscreenToggle.js';
 import { initProgressOverlay } from './progressOverlay.js';
 import { initHelpOverlay } from './helpOverlay.js';
 import { initAdminOverlay } from './adminOverlay';
+import { initSettingsOverlay } from './settingsOverlay.js';
 
 app.router = new Router();
 
@@ -19,5 +20,6 @@ initFullscreenToggle();
 initProgressOverlay();
 initHelpOverlay();
 initAdminOverlay();
+initSettingsOverlay();
 
 export default app;

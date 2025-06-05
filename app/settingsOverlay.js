@@ -1,0 +1,96 @@
+export const DEFAULT_BINDINGS = {
+  forward: 'W',
+  backward: 'S',
+  left: 'A',
+  right: 'D',
+  interact: 'space'
+};
+
+export function loadKeyBindings() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('keyBindings') || 'null');
+    return { ...DEFAULT_BINDINGS, ...stored };
+  } catch (e) {
+    return { ...DEFAULT_BINDINGS };
+  }
+}
+
+export function saveKeyBindings(bindings) {
+  localStorage.setItem('keyBindings', JSON.stringify(bindings));
+}
+
+function createInput(id, label, value) {
+  const wrap = document.createElement('div');
+  const lbl = document.createElement('label');
+  lbl.textContent = label + ': ';
+  const input = document.createElement('input');
+  input.id = id;
+  input.value = value;
+  lbl.appendChild(input);
+  wrap.appendChild(lbl);
+  return { wrap, input };
+}
+
+export function initSettingsOverlay() {
+  const overlay = document.createElement('div');
+  overlay.id = 'settingsOverlay';
+  overlay.style.display = 'none';
+
+  const bindings = loadKeyBindings();
+
+  const elements = {
+    forward: createInput('bindForward', 'Forward', bindings.forward),
+    backward: createInput('bindBackward', 'Backward', bindings.backward),
+    left: createInput('bindLeft', 'Left', bindings.left),
+    right: createInput('bindRight', 'Right', bindings.right),
+    interact: createInput('bindInteract', 'Interact', bindings.interact)
+  };
+
+  overlay.appendChild(document.createElement('h2')).textContent = 'Key Bindings';
+  Object.values(elements).forEach(obj => overlay.appendChild(obj.wrap));
+
+  const saveBtn = document.createElement('button');
+  saveBtn.id = 'saveBindings';
+  saveBtn.textContent = 'Save';
+  overlay.appendChild(saveBtn);
+
+  const closeBtn = document.createElement('button');
+  closeBtn.id = 'closeSettings';
+  closeBtn.textContent = 'Close';
+  overlay.appendChild(closeBtn);
+
+  document.body.appendChild(overlay);
+
+  function populate() {
+    const map = loadKeyBindings();
+    Object.keys(elements).forEach(k => {
+      elements[k].input.value = map[k];
+    });
+  }
+
+  saveBtn.addEventListener('click', () => {
+    const newMap = {
+      forward: elements.forward.input.value || DEFAULT_BINDINGS.forward,
+      backward: elements.backward.input.value || DEFAULT_BINDINGS.backward,
+      left: elements.left.input.value || DEFAULT_BINDINGS.left,
+      right: elements.right.input.value || DEFAULT_BINDINGS.right,
+      interact: elements.interact.input.value || DEFAULT_BINDINGS.interact
+    };
+    saveKeyBindings(newMap);
+    document.dispatchEvent(new CustomEvent('keyBindingsSaved', { detail: newMap }));
+    overlay.style.display = 'none';
+  });
+
+  closeBtn.addEventListener('click', () => {
+    overlay.style.display = 'none';
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') {
+      overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+      if (overlay.style.display === 'block') populate();
+    }
+  });
+}
+
+export default { initSettingsOverlay, loadKeyBindings, saveKeyBindings };
