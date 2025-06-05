@@ -58,6 +58,13 @@ npm run build
 
 The output is placed in the `dist/` directory and can be deployed to any static hosting environment.
 
+## PWA and Offline Support
+
+A service worker caches key assets so the game runs offline after the first load.
+The repository includes a PWA manifest, and when installed on mobile devices the
+game launches in standalone mode. Offline navigation requests fall back to
+`offline.html`.
+
 ## Frequently Asked Questions
 
 **Why is everything made of text?**

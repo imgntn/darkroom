@@ -1,12 +1,23 @@
-http://the-dark-room-game.herokuapp.com
+# The Dark Room
 
-a webGL world made of text that puts players in the dream of one of freud's most famous patients.  made in a couple of hectic days at facebook hq for global game jam 2014.
+Live demo: <http://the-dark-room-game.herokuapp.com>
+
+The Dark Room is a WebGL world rendered entirely with text. It places players in the dream of one of Freud's most famous patients and was originally created during Global Game Jam 2014 at Facebook HQ.
 
 For an in-depth guide covering installation, controls, and offline support, see
 [the documentation](docs/README.md).
 
 ![alt tag](http://i.imgur.com/BTIl5zC.png)
 ![alt tag](http://i.imgur.com/7emZTB1.png)
+
+## Features
+
+- **Text-Based World** – Every object is composed of typography.
+- **Multiple Control Schemes** – Play with keyboard, gamepad, or touch.
+- **Puzzle Progression** – Navigate rooms and solve challenges.
+- **Audio Toggle** – Mute or unmute with the on-screen button or `M`.
+- **Share Progress** – Share your best times via the Web Share API.
+- **Offline Support** – Works without a network connection after first load.
 
 with:
 
@@ -20,6 +31,8 @@ dan dugan
 WASD controls, press the space bar to do the action that the level says you should... definitely a work in progress!
 
 ## Local Development
+
+Ensure you have **Node.js v18 or later** installed.
 
 1. Install dependencies and build the bundle using webpack:
    ```bash
@@ -67,3 +80,6 @@ connection and it will continue to work.
 The project now provides a PWA manifest and offline fallback page so it can be
 installed on mobile devices. When offline, navigation requests show
 `offline.html`.
+
+Icon placeholders used in the PWA manifest live in the `icons/` folder as plain
+text files to keep this repository binary-free.
