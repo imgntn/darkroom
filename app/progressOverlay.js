@@ -26,6 +26,7 @@ export async function shareProgress() {
 export function initProgressOverlay() {
   const overlay = document.createElement('div');
   overlay.id = 'progressOverlay';
+  overlay.classList.add('overlayPanel');
   overlay.innerHTML = `
     <h2>Progress</h2>
     <div>Visited Levels:</div>
@@ -94,8 +95,8 @@ export function initProgressOverlay() {
 
   document.addEventListener('keydown', (e) => {
     if (e.code === 'KeyP') {
-      overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
-      if (overlay.style.display === 'block') update();
+      overlay.classList.toggle('show');
+      if (overlay.classList.contains('show')) update();
     }
   });
 }

@@ -34,7 +34,7 @@ function createInput(id, label, value) {
 export function initSettingsOverlay() {
   const overlay = document.createElement('div');
   overlay.id = 'settingsOverlay';
-  overlay.style.display = 'none';
+  overlay.classList.add('overlayPanel');
 
   const bindings = loadKeyBindings();
 
@@ -78,17 +78,17 @@ export function initSettingsOverlay() {
     };
     saveKeyBindings(newMap);
     document.dispatchEvent(new CustomEvent('keyBindingsSaved', { detail: newMap }));
-    overlay.style.display = 'none';
+    overlay.classList.remove('show');
   });
 
   closeBtn.addEventListener('click', () => {
-    overlay.style.display = 'none';
+    overlay.classList.remove('show');
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.code === 'Escape') {
-      overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
-      if (overlay.style.display === 'block') populate();
+      overlay.classList.toggle('show');
+      if (overlay.classList.contains('show')) populate();
     }
   });
 }
