@@ -41,6 +41,7 @@ Then visit [http://localhost:3333](http://localhost:3333).
 - **P** – Open the progress overlay and share your progress.
 - **F** – Toggle fullscreen mode.
 - **O** – Toggle the admin panel to view and edit saved progress.
+- **R** – Restart the current puzzle when one is active.
 
 ### Running Tests
 

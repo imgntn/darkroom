@@ -2,6 +2,7 @@ import { startPuzzle } from '../../progress';
 
 export default function createMagicSquare(onSolved) {
   startPuzzle();
+  let startTime = Date.now();
   const target = [
     [8, 1, 6],
     [3, 5, 7],
@@ -33,6 +34,12 @@ export default function createMagicSquare(onSolved) {
   keypad.style.gridGap = '5px';
   container.appendChild(keypad);
 
+  const restartBtn = document.createElement('button');
+  restartBtn.id = 'restartPuzzle';
+  restartBtn.textContent = 'Restart';
+  restartBtn.addEventListener('click', restart);
+  container.appendChild(restartBtn);
+
   let selected = null;
 
   function updateTimer(start) {
@@ -42,7 +49,7 @@ export default function createMagicSquare(onSolved) {
       requestAnimationFrame(() => updateTimer(start));
     }
   }
-  updateTimer(Date.now());
+  updateTimer(startTime);
 
   function check() {
     for (let i = 0; i < 3; i++) {
@@ -54,7 +61,22 @@ export default function createMagicSquare(onSolved) {
     }
     container.classList.add('solved');
     if (typeof onSolved === 'function') onSolved();
-    setTimeout(() => container.remove(), 1000);
+    setTimeout(() => {
+      container.remove();
+      document.removeEventListener('keydown', onKeyDown);
+    }, 1000);
+  }
+
+  function restart() {
+    container.classList.remove('solved');
+    startPuzzle();
+    startTime = Date.now();
+    state.forEach(row => row.fill(''));
+    grid.querySelectorAll('.magic-cell').forEach(cell => {
+      cell.textContent = '';
+    });
+    selected = null;
+    updateTimer(startTime);
   }
 
   for (let i = 0; i < 3; i++) {
@@ -87,4 +109,11 @@ export default function createMagicSquare(onSolved) {
   }
 
   document.body.appendChild(container);
+
+  function onKeyDown(e) {
+    if (e.code === 'KeyR') {
+      restart();
+    }
+  }
+  document.addEventListener('keydown', onKeyDown);
 }

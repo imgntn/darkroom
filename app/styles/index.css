@@ -102,6 +102,10 @@ margin-top:200px;
   gap: 5px;
 }
 
+#restartPuzzle {
+  margin-top: 10px;
+}
+
 .magic-key {
   width: 40px;
   height: 40px;
