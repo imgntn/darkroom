@@ -30,6 +30,7 @@ dan dugan
 
 
 Use **WASD** or the **arrow keys** to move around. Press the space bar to perform the action the level requires... definitely a work in progress!
+Press **R** during a puzzle to quickly restart your attempt.
 
 ## Local Development
 
