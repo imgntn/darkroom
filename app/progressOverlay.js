@@ -49,6 +49,12 @@ export function initProgressOverlay() {
 
   function update() {
     const prog = getProgress();
+    const motionBtn = overlay.querySelector('#toggleMotion');
+    if (motionBtn) {
+      motionBtn.textContent = motionEnabled()
+        ? 'Disable Motion Controls'
+        : 'Enable Motion Controls';
+    }
     const visited = overlay.querySelector('#visitedList');
     visited.innerHTML = Object.keys(prog.levels).map(l => `<li>${l}</li>`).join('') || '<li>None</li>';
     const items = overlay.querySelector('#itemsList');
