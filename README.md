@@ -16,6 +16,7 @@ For an in-depth guide covering installation, controls, and offline support, see
 - **Multiple Control Schemes** – Play with keyboard, gamepad, or touch.
 - **Puzzle Progression** – Navigate rooms and solve challenges.
 - **Audio Toggle** – Mute or unmute with the on-screen button or `M`.
+- **Fullscreen Mode** – Press `F` or use the on-screen button for fullscreen.
 - **Share Progress** – Share your best times via the Web Share API.
 - **Offline Support** – Works without a network connection after first load.
 
@@ -56,6 +57,7 @@ Then open [http://localhost:3333](http://localhost:3333) in your browser.
 
 Use the **Mute** button (or press **M**) to toggle audio. The preference
 persists across sessions.
+Use the **Fullscreen** button (or press **F**) for an immersive experience.
 
 ### Running Tests
 

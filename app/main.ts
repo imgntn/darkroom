@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 import app from './app.js';
 import Router from './router.js';
 import { initAudioToggle } from './audioToggle.js';
+import { initFullscreenToggle } from './fullscreenToggle.js';
 import { initProgressOverlay } from './progressOverlay.js';
 import { initHelpOverlay } from './helpOverlay.js';
 import { initAdminOverlay } from './adminOverlay';
@@ -14,6 +15,7 @@ Backbone.history.start({
 });
 
 initAudioToggle();
+initFullscreenToggle();
 initProgressOverlay();
 initHelpOverlay();
 initAdminOverlay();

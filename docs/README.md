@@ -8,6 +8,7 @@ The Dark Room is a browser-based game built with WebGL and Three.js. It creates 
 - **Multiple Control Schemes** – Play with keyboard, gamepad, or touch controls.
 - **Puzzle Progression** – Navigate rooms, interact with objects, and complete challenges to advance.
 - **Audio Toggle** – Mute or unmute background audio with the on-screen button or the `M` key.
+- **Fullscreen Mode** – Press `F` or use the on-screen button to enter or exit fullscreen.
 - **Share Progress** – Quickly share your best puzzle times using the Web Share API or clipboard.
 - **Offline Support** – After an initial visit, the game works without a network connection thanks to a service worker.
 
@@ -38,6 +39,7 @@ Then visit [http://localhost:3333](http://localhost:3333).
 - **Space** – Perform the action specified in the level.
 - **M** – Toggle audio (also available via on-screen button).
 - **P** – Open the progress overlay and share your progress.
+- **F** – Toggle fullscreen mode.
 - **O** – Toggle the admin panel to view and edit saved progress.
 
 ### Running Tests
