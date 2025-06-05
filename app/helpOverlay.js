@@ -5,7 +5,7 @@ export function initHelpOverlay() {
     <h2>Controls</h2>
     <div id="keyboardHelp">
       <h3>Keyboard</h3>
-      <p>WASD to move, Space to interact, M to mute, P for progress</p>
+      <p>WASD to move, Space to interact, M to mute, P for progress, F for fullscreen</p>
     </div>
     <div id="gamepadHelp" style="display:none;">
       <h3>Gamepad</h3>
