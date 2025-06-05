@@ -4,7 +4,7 @@ import keyboard from 'modules/controllers/controllers.first_person';
 export function initAdminOverlay(): void {
   const overlay = document.createElement('div');
   overlay.id = 'adminOverlay';
-  overlay.style.display = 'none';
+  overlay.classList.add('overlayPanel');
   overlay.innerHTML = `
     <h2>Admin Panel</h2>
     <pre id="adminProgress"></pre>
@@ -38,13 +38,13 @@ export function initAdminOverlay(): void {
   });
 
   closeBtn.addEventListener('click', () => {
-    overlay.style.display = 'none';
+    overlay.classList.remove('show');
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.code === 'KeyO') {
-      overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
-      if (overlay.style.display === 'block') update();
+      overlay.classList.toggle('show');
+      if (overlay.classList.contains('show')) update();
     }
   });
 }

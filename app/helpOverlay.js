@@ -1,6 +1,7 @@
 export function initHelpOverlay() {
   const overlay = document.createElement('div');
   overlay.id = 'helpOverlay';
+  overlay.classList.add('overlayPanel');
   overlay.innerHTML = `
     <h2>Controls</h2>
     <div id="keyboardHelp">
@@ -21,17 +22,16 @@ export function initHelpOverlay() {
     </div>
     <button id="closeHelp">Close</button>
   `;
-  overlay.style.display = 'none';
   document.body.appendChild(overlay);
 
   const closeBtn = overlay.querySelector('#closeHelp');
   closeBtn.addEventListener('click', () => {
-    overlay.style.display = 'none';
+    overlay.classList.remove('show');
     localStorage.setItem('helpHidden', 'true');
   });
 
   function showHelp() {
-    overlay.style.display = 'block';
+    overlay.classList.add('show');
     localStorage.setItem('helpHidden', 'false');
   }
 
@@ -56,8 +56,8 @@ export function initHelpOverlay() {
 
   document.addEventListener('keydown', (e) => {
     if (e.code === 'KeyH') {
-      overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
-      localStorage.setItem('helpHidden', overlay.style.display === 'none' ? 'true' : 'false');
+      overlay.classList.toggle('show');
+      localStorage.setItem('helpHidden', overlay.classList.contains('show') ? 'false' : 'true');
     }
   });
 
