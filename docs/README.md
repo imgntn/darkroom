@@ -38,6 +38,7 @@ Then visit [http://localhost:3333](http://localhost:3333).
 - **Space** – Perform the action specified in the level.
 - **M** – Toggle audio (also available via on-screen button).
 - **P** – Open the progress overlay and share your progress.
+- **O** – Toggle the admin panel to view and edit saved progress.
 
 ### Running Tests
 
