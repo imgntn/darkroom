@@ -6,6 +6,8 @@ The Dark Room is a WebGL world rendered entirely with text. It places players in
 
 For an in-depth guide covering installation, controls, and offline support, see
 [the documentation](docs/README.md).
+For QA setup instructions, see [the QA guide](docs/QA_GUIDE.md).
+
 
 ![alt tag](http://i.imgur.com/BTIl5zC.png)
 ![alt tag](http://i.imgur.com/7emZTB1.png)
