@@ -34,6 +34,9 @@ npm start
 
 Then visit [http://localhost:3333](http://localhost:3333).
 
+To verify the server is running, open [http://localhost:3333/health](http://localhost:3333/health)
+to see a simple JSON status response.
+
 ### Keyboard Shortcuts
 
 - **WASD** or **Arrow Keys** – Move around the level.
