@@ -17,9 +17,6 @@
     "workbox-webpack-plugin": "^7.3.0",
     "webpack-dev-server": "^5.2.2"
   },
-  "peerDependencies": {
-    "coveralls": "*"
-  },
   "scripts": {
     "test": "web-test-runner --config web-test-runner.config.js",
     "start": "node server.js",
