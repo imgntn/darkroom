@@ -58,6 +58,9 @@ npm run dev
 
 Then open [http://localhost:3333](http://localhost:3333) in your browser.
 
+You can also hit [http://localhost:3333/health](http://localhost:3333/health)
+to confirm the Express server is responding.
+
 Use the **Mute** button (or press **M**) to toggle audio. The preference
 persists across sessions.
 Use the **Fullscreen** button (or press **F**) for an immersive experience.
