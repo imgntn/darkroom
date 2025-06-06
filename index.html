@@ -6,6 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
   <title>darkroom</title>
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#000000">
@@ -14,13 +18,15 @@
 
 </head>
 
-<body>
+  <body>
   <audio id="bgMusic" src="/app/sound/darkRoomSONG.mp3" autoplay loop></audio>
   <audio id="vocals" src="/app/sound/vocal0.mp3" autoplay loop></audio>
-  <button id="audioToggle">Mute</button>
-  <button id="fullscreenToggle">Fullscreen</button>
+  <div id="toolbar">
+    <button id="audioToggle" class="toolbar-btn">Mute</button>
+    <button id="fullscreenToggle" class="toolbar-btn">Fullscreen</button>
+  </div>
   <div id="pointerHint">Click to lock pointer, press P to view progress</div>
-  <div id="crosshair">+</div>
+  <div id="crosshair"></div>
   <div id="joystickLeft"></div>
   <div id="joystickRight"></div>
   <!-- Application container. -->
@@ -30,6 +36,7 @@
 <br>
 <br>
   <div id="loaderText">LOADING...</div>
+  <div id="spinner"></div>
 </div>
 
 <div id="statusHolder">
