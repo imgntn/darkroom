@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "@types/backbone": "^1.4.23",
+    "@types/three": "^0.177.0",
     "@web/test-runner": "^0.20.2",
     "web-test-runner-jasmine": "^0.1.2",
     "@web/test-runner-playwright": "^0.11.0",
