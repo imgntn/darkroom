@@ -1,6 +1,8 @@
 # The Dark Room
 
 The Dark Room is a browser-based game built with WebGL and Three.js. It creates a 3D world rendered entirely with text. Originally developed during Global Game Jam 2014, the project lets you explore a "dark room" environment and solve puzzles using keyboard and gamepad controls.
+For testing procedures, see [QA Guide](QA_GUIDE.md).
+
 
 ## Features
 
