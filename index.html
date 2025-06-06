@@ -10,11 +10,7 @@
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#000000">
 
-  <!-- Application styles. -->
-  <!-- build:[href] /styles.min.css -->
-  <link rel="stylesheet" href="/app/styles/index.css">
-
-  <!-- /build -->
+  <!-- Application styles will be injected by Webpack -->
 
 </head>
 
@@ -44,8 +40,7 @@
 
 
 
-  <!-- Application source. -->
-  <script src="/dist/bundle.js"></script>
+  <!-- Application source will be injected by Webpack -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
@@ -55,8 +50,6 @@
   </script>
  
 
-  
-  <!-- /build -->
 </body>
 
 </html>

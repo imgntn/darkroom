@@ -1,34 +1,30 @@
 {
   "devDependencies": {
-    "grunt": "~1.6.1",
-    "bbb": "~2.0.0",
     "@web/test-runner": "^0.20.2",
     "web-test-runner-jasmine": "^0.1.2",
     "@web/test-runner-playwright": "^0.11.0",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1",
-    "grunt-contrib-jshint": "~3.2.0",
-    "grunt-contrib-cssmin": "~5.0.0",
-    "grunt-contrib-copy": "~1.0.0",
-    "grunt-contrib-clean": "~2.0.1",
-    "grunt-contrib-compress": "~2.0.0",
-    "grunt-processhtml": "~0.4.4",
-    "grunt-contrib-watch": "~1.1.0",
-    "grunt-cli": "~1.5.0",
+    "rimraf": "^5.0.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "css-minimizer-webpack-plugin": "^5.0.1",
+    "compression-webpack-plugin": "^10.0.0",
     "typescript": "^5.8.3",
     "ts-loader": "^9.5.2",
     "workbox-webpack-plugin": "^7.3.0",
     "webpack-dev-server": "^5.2.2"
   },
   "peerDependencies": {
-    "generator-bbb": "*",
-    "grunt-cli": "*",
     "coveralls": "*"
   },
   "scripts": {
     "test": "web-test-runner --config web-test-runner.config.js",
     "start": "node server.js",
-    "build": "webpack --mode=production",
+    "clean": "rimraf dist test/reports",
+    "build": "npm run clean && webpack --mode=production",
     "dev": "webpack serve --mode development --hot"
   },
   "name": "dark-room",
