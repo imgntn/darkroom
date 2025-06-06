@@ -34,7 +34,7 @@
   "name": "dark-room",
   "version": "0.1.0",
   "dependencies": {
-    "express": "^4.13.1",
+    "express": "^4.18.2",
     "jquery": "^3.7.1",
     "underscore": "^1.13.6",
     "backbone": "^1.5.0",
