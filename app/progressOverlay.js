@@ -16,8 +16,12 @@ export async function shareProgress() {
     try { await navigator.share({ text }); return; } catch (e) { /* ignore */ }
   }
   try {
-    await navigator.clipboard.writeText(text);
-    alert('Progress copied to clipboard');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      alert('Progress copied to clipboard');
+    } else {
+      throw new Error('Clipboard API unavailable');
+    }
   } catch (e) {
     alert(text);
   }
