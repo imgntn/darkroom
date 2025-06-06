@@ -180,9 +180,12 @@ console.log('starting lizards')
 //   $('#storyholder_4').show()
 		}
 	}
-	keyboard.addToCollideableObjects = function(o) {
-		this.collideableObjects.push(o);
-	};
+        keyboard.addToCollideableObjects = function(o) {
+                this.collideableObjects.push(o);
+                if (!o.userData) o.userData = {};
+                o.userData.boundingBox = new THREE.Box3().setFromObject(o);
+                o.userData.lastPosition = o.position.clone();
+        };
 
         keyboard.addToDetectableObjects = function(o) {
                 this.detectableObjects.push(o);
@@ -191,7 +194,15 @@ console.log('starting lizards')
         keyboard.collision = function(_mesh) {
                 const playerBox = new THREE.Box3().setFromObject(_mesh);
                 for (const obj of this.collideableObjects) {
-                        const objBox = new THREE.Box3().setFromObject(obj);
+                        if (!obj.userData) obj.userData = {};
+                        if (!obj.userData.boundingBox) {
+                                obj.userData.boundingBox = new THREE.Box3().setFromObject(obj);
+                                obj.userData.lastPosition = obj.position.clone();
+                        } else if (!obj.userData.lastPosition.equals(obj.position)) {
+                                obj.userData.boundingBox.setFromObject(obj);
+                                obj.userData.lastPosition.copy(obj.position);
+                        }
+                        const objBox = obj.userData.boundingBox;
                         if (playerBox.intersectsBox(objBox)) {
                                 if (obj.id === 27) keyboard.enterLevel(27);
                                 else if (obj.id === 30) keyboard.enterLevel(30);
