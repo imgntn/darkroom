@@ -11,6 +11,9 @@
     "outDir": "dist",
     "baseUrl": "./",
     "paths": {
+      "modules/*": ["app/modules/*"],
+      "app": ["app/app.js"],
+      "app/*": ["app/*"],
       "*": ["*"]
     }
   },
