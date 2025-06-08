@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import story from 'modules/story/story.main';
 import createMagicSquare from 'modules/puzzles/magic_square';
+import createMemoryMatch from 'modules/puzzles/memory_match';
 import { markPuzzleSolved, markItemCollected, markLevelVisited, setCurrentLevel } from '../../progress';
 import { highlight, removeHighlight } from '../../highlightManager.js';
 import { initTouchControls, getMove, getLook } from '../../touchControls.js';
@@ -44,6 +45,10 @@ keyboard.initPointerLock = function(camera) {
 document.addEventListener('keydown', (e) => {
   if (e.code === 'KeyO') {
     createMagicSquare(() => {
+      markPuzzleSolved();
+    });
+  } else if (e.code === 'KeyN') {
+    createMemoryMatch(() => {
       markPuzzleSolved();
     });
   }
