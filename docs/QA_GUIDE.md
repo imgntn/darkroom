@@ -4,7 +4,7 @@ This guide outlines how to set up and test **The Dark Room** locally.
 
 ## Prerequisites
 
-- **Node.js v18 or later**
+- **Node.js v20 or later**
 - A modern web browser (Chrome, Firefox, or Edge)
 
 ## Getting Started
