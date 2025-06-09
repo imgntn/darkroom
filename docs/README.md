@@ -17,7 +17,7 @@ For testing procedures, see [QA Guide](QA_GUIDE.md).
 
 ## Installation
 
-1. Install Node.js (v18 or later recommended).
+1. Install Node.js (v20 or later recommended).
 2. Run `npm install` to install dependencies.
 3. Build the project:
    ```bash
@@ -99,4 +99,6 @@ Contributions are welcome! Feel free to submit issues or pull requests. Please r
 
 - [Live Demo](http://the-dark-room-game.herokuapp.com)
 - [Global Game Jam 2014](https://globalgamejam.org/) – the event where the project originated.
+- [Architecture Diagram](ARCHITECTURE.md) – high-level view of the game
+  structure and offline flow.
 

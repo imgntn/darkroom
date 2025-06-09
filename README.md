@@ -7,6 +7,8 @@ The Dark Room is a WebGL world rendered entirely with text. It places players in
 For an in-depth guide covering installation, controls, and offline support, see
 [the documentation](docs/README.md).
 For QA setup instructions, see [the QA guide](docs/QA_GUIDE.md).
+For a high-level overview of how the pieces fit together, see the
+[architecture document](docs/ARCHITECTURE.md).
 
 
 ![alt tag](http://i.imgur.com/BTIl5zC.png)
@@ -38,7 +40,7 @@ Press **R** during a puzzle to quickly restart your attempt.
 
 ## Local Development
 
-Ensure you have **Node.js v18 or later** installed.
+Ensure you have **Node.js v20 or later** installed.
 
 1. Install dependencies and build the bundle using webpack:
    ```bash
