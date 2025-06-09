@@ -6,6 +6,21 @@ export const DEFAULT_BINDINGS = {
   interact: 'space'
 };
 
+export const DEFAULT_ACCENT_COLOR = '#0ff';
+
+export function loadAccentColor() {
+  return localStorage.getItem('accentColor') || DEFAULT_ACCENT_COLOR;
+}
+
+export function saveAccentColor(color) {
+  localStorage.setItem('accentColor', color);
+  document.documentElement.style.setProperty('--accent-color', color);
+}
+
+export function applyAccentColor() {
+  document.documentElement.style.setProperty('--accent-color', loadAccentColor());
+}
+
 export function loadKeyBindings() {
   try {
     const stored = JSON.parse(localStorage.getItem('keyBindings') || 'null');
@@ -37,6 +52,7 @@ export function initSettingsOverlay() {
   overlay.classList.add('overlayPanel');
 
   const bindings = loadKeyBindings();
+  const accentColor = loadAccentColor();
 
   const elements = {
     forward: createInput('bindForward', 'Forward', bindings.forward),
@@ -46,8 +62,13 @@ export function initSettingsOverlay() {
     interact: createInput('bindInteract', 'Interact', bindings.interact)
   };
 
+  const colorInput = createInput('accentColor', 'Crosshair Color', accentColor);
+  colorInput.input.type = 'color';
+
   overlay.appendChild(document.createElement('h2')).textContent = 'Key Bindings';
   Object.values(elements).forEach(obj => overlay.appendChild(obj.wrap));
+  overlay.appendChild(document.createElement('h2')).textContent = 'Appearance';
+  overlay.appendChild(colorInput.wrap);
 
   const saveBtn = document.createElement('button');
   saveBtn.id = 'saveBindings';
@@ -66,6 +87,7 @@ export function initSettingsOverlay() {
     Object.keys(elements).forEach(k => {
       elements[k].input.value = map[k];
     });
+    colorInput.input.value = loadAccentColor();
   }
 
   saveBtn.addEventListener('click', () => {
@@ -77,6 +99,7 @@ export function initSettingsOverlay() {
       interact: elements.interact.input.value || DEFAULT_BINDINGS.interact
     };
     saveKeyBindings(newMap);
+    saveAccentColor(colorInput.input.value || DEFAULT_ACCENT_COLOR);
     document.dispatchEvent(new CustomEvent('keyBindingsSaved', { detail: newMap }));
     overlay.classList.remove('show');
   });
@@ -93,4 +116,4 @@ export function initSettingsOverlay() {
   });
 }
 
-export default { initSettingsOverlay, loadKeyBindings, saveKeyBindings };
+export default { initSettingsOverlay, loadKeyBindings, saveKeyBindings, loadAccentColor, saveAccentColor, applyAccentColor };

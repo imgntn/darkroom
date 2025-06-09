@@ -261,6 +261,23 @@ font-family: 'Bazar', sans-serif;
 #progressOverlay button {
   margin-top: 5px;
 }
+
+#scoreboardOverlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--panel-bg);
+  border-radius: var(--panel-radius);
+  color: white;
+  padding: 10px;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+#scoreboardOverlay.show {
+  display: block;
+}
 #joystickLeft, #joystickRight {
   position: fixed;
   bottom: 20px;

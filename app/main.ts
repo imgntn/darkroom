@@ -3,6 +3,7 @@ import app from './app.js';
 import Router from './router.js';
 import { initAudioToggle } from './audioToggle.js';
 import { initFullscreenToggle } from './fullscreenToggle.js';
+import { applyAccentColor } from './settingsOverlay.js';
 
 app.router = new Router();
 
@@ -13,12 +14,14 @@ Backbone.history.start({
 
 initAudioToggle();
 initFullscreenToggle();
+applyAccentColor();
 
 // Lazily load overlay modules when first requested to reduce initial bundle size
 let progressOverlayLoaded = false;
 let helpOverlayLoaded = false;
 let adminOverlayLoaded = false;
 let settingsOverlayLoaded = false;
+let scoreboardOverlayLoaded = false;
 
 async function loadProgressOverlay() {
   if (!progressOverlayLoaded) {
@@ -52,6 +55,14 @@ async function loadSettingsOverlay() {
   }
 }
 
+async function loadScoreboardOverlay() {
+  if (!scoreboardOverlayLoaded) {
+    const mod = await import(/* webpackChunkName: "scoreboard-overlay" */ './scoreboardOverlay.js');
+    mod.initScoreboardOverlay();
+    scoreboardOverlayLoaded = true;
+  }
+}
+
 // Set up key listeners to load overlays on demand
 document.addEventListener('keydown', (e) => {
   switch (e.code) {
@@ -76,6 +87,13 @@ document.addEventListener('keydown', (e) => {
         });
       }
       break;
+    case 'KeyL':
+      if (!scoreboardOverlayLoaded) {
+        loadScoreboardOverlay().then(() => {
+          document.dispatchEvent(new KeyboardEvent('keydown', { code: 'KeyL' }));
+        });
+      }
+      break;
     case 'Escape':
       if (!settingsOverlayLoaded) {
         loadSettingsOverlay().then(() => {
@@ -91,5 +109,6 @@ import(/* webpackPrefetch: true */ './progressOverlay.js');
 import(/* webpackPrefetch: true */ './helpOverlay.js');
 import(/* webpackPrefetch: true */ './adminOverlay');
 import(/* webpackPrefetch: true */ './settingsOverlay.js');
+import(/* webpackPrefetch: true */ './scoreboardOverlay.js');
 
 export default app;
