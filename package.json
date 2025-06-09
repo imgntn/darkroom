@@ -30,6 +30,9 @@
   },
   "name": "dark-room",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "express": "^5.1.0",
     "jquery": "^3.7.1",

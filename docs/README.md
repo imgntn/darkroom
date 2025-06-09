@@ -12,6 +12,8 @@ For testing procedures, see [QA Guide](QA_GUIDE.md).
 - **Audio Toggle** – Mute or unmute background audio with the on-screen button or the `M` key.
 - **Fullscreen Mode** – Press `F` or use the on-screen button to enter or exit fullscreen.
 - **Share Progress** – Quickly share your best puzzle times using the Web Share API or clipboard.
+- **Online Leaderboard** – Compare your fastest puzzle times with players worldwide.
+- **Customizable Crosshair** – Pick your preferred crosshair color in the settings overlay.
 - **Offline Support** – After an initial visit, the game works without a network connection thanks to a service worker.
 - **Customizable Controls** – Press `Escape` to open the settings overlay and remap keys.
 
@@ -48,6 +50,7 @@ to see a simple JSON status response.
 - **F** – Toggle fullscreen mode.
 - **O** – Toggle the admin panel to view and edit saved progress.
 - **Escape** – Open the settings overlay to customize controls.
+- **L** – Show the online leaderboard.
 - **R** – Restart the current puzzle when one is active.
 
 Your key selections are saved in the browser so they'll be restored on the next visit.

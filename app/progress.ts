@@ -46,8 +46,18 @@ export function markItemCollected(name: string): void {
 export function markPuzzleSolved(): void {
   progress.puzzleSolved = true;
   if (progress.currentAttemptStart) {
-    progress.puzzleTimes.push(Date.now() - progress.currentAttemptStart);
+    const elapsed = Date.now() - progress.currentAttemptStart;
+    progress.puzzleTimes.push(elapsed);
     progress.currentAttemptStart = undefined;
+    try {
+      fetch('/api/scoreboard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ time: elapsed })
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
   save();
 }
