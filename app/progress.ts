@@ -1,3 +1,4 @@
+import { loadPlayerName } from './playerName.js';
 export interface ProgressState {
   levels: Record<string, boolean>;
   items: Record<string, boolean>;
@@ -50,10 +51,11 @@ export function markPuzzleSolved(): void {
     progress.puzzleTimes.push(elapsed);
     progress.currentAttemptStart = undefined;
     try {
+      const name = loadPlayerName();
       fetch('/api/scoreboard', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ time: elapsed })
+        body: JSON.stringify({ time: elapsed, name })
       });
     } catch (e) {
       console.error(e);

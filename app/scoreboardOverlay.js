@@ -1,13 +1,23 @@
+import { loadPlayerName, savePlayerName } from './playerName.js';
 export function initScoreboardOverlay() {
   const overlay = document.createElement('div');
   overlay.id = 'scoreboardOverlay';
   overlay.classList.add('overlayPanel');
   overlay.innerHTML = `
     <h2>Leaderboard</h2>
+    <label>Name: <input id="playerNameInput" /></label>
     <ul id="scoreList"></ul>
     <button id="closeScoreboard">Close</button>
   `;
   document.body.appendChild(overlay);
+
+  const nameInput = overlay.querySelector('#playerNameInput');
+  if (nameInput) {
+    nameInput.value = loadPlayerName();
+    nameInput.addEventListener('change', () => {
+      savePlayerName(nameInput.value);
+    });
+  }
 
   async function loadScores() {
     try {
@@ -15,8 +25,9 @@ export function initScoreboardOverlay() {
       const data = await res.json();
       const list = overlay.querySelector('#scoreList');
       if (list) {
-        list.innerHTML = data.times && data.times.length
-          ? data.times.map(t => `<li>${(t/1000).toFixed(1)}s</li>`).join('')
+        const scores = data.scores || (data.times || []).map(t => ({ time: t, name: 'Unknown' }));
+        list.innerHTML = scores.length
+          ? scores.map(s => `<li>${s.name} – ${(s.time/1000).toFixed(1)}s</li>`).join('')
           : '<li>None</li>';
       }
     } catch (e) {
@@ -37,10 +48,11 @@ export function initScoreboardOverlay() {
 }
 
 export function submitScore(time) {
+  const name = loadPlayerName();
   fetch('/api/scoreboard', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ time })
+    body: JSON.stringify({ time, name })
   }).catch(() => {});
 }
 

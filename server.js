@@ -9,9 +9,15 @@ app.use(express.json());
 
 function readScores() {
   try {
-    return JSON.parse(fs.readFileSync(SCORES_FILE, 'utf8'));
+    const data = JSON.parse(fs.readFileSync(SCORES_FILE, 'utf8'));
+    if (Array.isArray(data.times)) {
+      const converted = { scores: data.times.map(t => ({ name: 'Unknown', time: t })) };
+      writeScores(converted);
+      return converted;
+    }
+    return { scores: Array.isArray(data.scores) ? data.scores : [] };
   } catch {
-    return { times: [] };
+    return { scores: [] };
   }
 }
 
@@ -36,10 +42,12 @@ app.get('/api/scoreboard', async (req, res) => {
 
 app.post('/api/scoreboard', async (req, res) => {
   const time = parseInt(req.body.time, 10);
+  let name = typeof req.body.name === 'string' ? req.body.name : 'Unknown';
+  name = name.slice(0, 100);
   if (isNaN(time)) return res.status(400).json({ error: 'Invalid time' });
   const data = readScores();
-  data.times.push(time);
-  data.times = data.times.sort((a, b) => a - b).slice(0, 10);
+  data.scores.push({ time, name });
+  data.scores = data.scores.sort((a, b) => a.time - b.time).slice(0, 10);
   writeScores(data);
   res.json({ status: 'ok' });
 });

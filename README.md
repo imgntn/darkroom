@@ -37,6 +37,7 @@ dan dugan
 Use **WASD** or the **arrow keys** to move around. Press the space bar to perform the action the level requires... definitely a work in progress!
 Press **Escape** at any time to open the settings overlay and remap the movement or interaction keys. Your choices persist locally.
 Press **R** during a puzzle to quickly restart your attempt.
+Press **L** to open the leaderboard overlay and view top puzzle times.
 
 ## Local Development
 

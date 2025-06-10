@@ -13,6 +13,7 @@ For testing procedures, see [QA Guide](QA_GUIDE.md).
 - **Fullscreen Mode** – Press `F` or use the on-screen button to enter or exit fullscreen.
 - **Share Progress** – Quickly share your best puzzle times using the Web Share API or clipboard.
 - **Online Leaderboard** – Compare your fastest puzzle times with players worldwide.
+- **Leaderboard with player names** – Submit your name alongside puzzle times and see who tops the chart.
 - **Customizable Crosshair** – Pick your preferred crosshair color in the settings overlay.
 - **Offline Support** – After an initial visit, the game works without a network connection thanks to a service worker.
 - **Customizable Controls** – Press `Escape` to open the settings overlay and remap keys.
